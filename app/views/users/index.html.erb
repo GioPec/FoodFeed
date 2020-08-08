@@ -1,0 +1,42 @@
+<div>
+    <table>Users
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>username</th>
+                <th>first_name</th>
+                <th>last_name</th>
+                <th>date_of_birth</th>
+                <th>phone_number</th>
+                <th>gender</th>
+                <th>email</th>
+                <th>bio</th>
+                <th>img</th>
+                <th>role</th>
+                <th>created_at</th>
+                <th>updated_at</th>
+                <th>show</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @users.each do |u| %>
+                <tr>
+                    <td><%= u.id %></td>
+                    <td><%= u.username %></td>
+                    <td><%= u.first_name %></td>
+                    <td><%= u.last_name %></td>
+                    <td><%= u.date_of_birth %></td>
+                    <td><%= u.phone_number %></td>
+                    <td><%= u.gender %></td>
+                    <td><%= u.email %></td>
+                    <td><%= u.bio %></td>
+                    <td><%= u.img %></td>
+                    <td><%= u.role %></td>
+                    <td><%= u.created_at %></td>
+                    <td><%= u.updated_at %></td>
+                    <td><%= link_to "show", user_path(u.id) %></td>
+                </tr>
+            <% end%>
+        </tbody>
+    </table>
+</div>
