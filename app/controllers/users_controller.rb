@@ -11,5 +11,7 @@ class UsersController < ApplicationController
         else
             render html: 'User does not exit'   #TODO 404
         end
+
+        @user = User.find(@user.id)
 	end
 end

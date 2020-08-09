@@ -21,14 +21,14 @@ ActiveRecord::Schema.define(version: 2020_08_08_155955) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "username", limit: 20, default: " ", null: false
-    t.string "first_name", limit: 20, default: " ", null: false
-    t.string "last_name", limit: 20, default: " ", null: false
+    t.string "username", limit: 20, default: " "
+    t.string "first_name", limit: 20, default: " "
+    t.string "last_name", limit: 20, default: " "
     t.date "date_of_birth"
     t.integer "phone_number"
     t.integer "gender", default: 0
-    t.string "email", limit: 50, default: ""
-    t.string "bio", limit: 500, default: ""
+    t.string "email", limit: 50, default: " "
+    t.string "bio", limit: 500, default: " "
     t.string "img", default: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
     t.string "role", default: "U"
     t.datetime "created_at", precision: 6, null: false

@@ -1,18 +1,34 @@
 <div>
-
-<%= @user.id %><br>
-<%= @user.username %><br>
-<%= @user.email %><br>
-<%= @user.first_name %><br>
-<%= @user.last_name %><br>
-<img src= "<%= @user.img %>" height='50px'><br>
+<h2>Il tuo profilo:</h2>
+<div>User id: <%= @user.id %></div>
+<div>Username: <%= @user.username %></div>
+<div>Email: <%= @user.email %></div>
+<div>Nome: <%= @user.first_name %></div>
+<div>Cognome: <%= @user.last_name %></div>
+<img src= "<%= @user.img %>" height='50px'>
+<hr>
+<h2>Le tue ricette:</h2>
+<div>
+    <% @user.recipes.each do |r| %>
+        <%= r.title %><br>
+        <%= r.preparazione %><br>
+        <%= r.img %><br>
+        <%= link_to "Recipe details", user_recipe_path(current_user.id, r.id) %><br>
+        <hr>
+    <% end %>
+</div>
 
 </div>
 
-<%= link_to "Your profile", user_path(current_user.id) %><br>
+<% if current_user.id == @user.id %>
 
-<%= link_to "Edit your profile", edit_user_registration_path %><br>
+    <%= link_to "Edit your profile", edit_user_registration_path %><br>
 
-<%= link_to 'Logout', destroy_user_session_path, :method => :delete %><br>
+    <%= link_to 'Logout', destroy_user_session_path, :method => :delete %><br>
 
-<%= link_to "Delete your profile", user_registration_path, :method => :delete %><br>
+    <%= link_to "Delete your profile", user_registration_path, :method => :delete %><br><br>
+
+    <%= link_to "Add new recipe", new_user_recipe_path(current_user.id) %>
+
+<% else %>
+<% end %>

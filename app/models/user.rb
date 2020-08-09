@@ -12,10 +12,10 @@ class User < ApplicationRecord
         user.email = auth.info.email
         user.gender = auth.extra.gender
         user.date_of_birth = auth.info.birthday
-        #user.first_name = auth.info.first_name 
-        #user.last_name = auth.info.last_name
+        user.first_name = auth.info.first_name 
+        user.last_name = auth.info.last_name
         user.img = auth.info.image
-        #user.username = auth.extra.name
+        user.username = auth.info.name
         user.password = Devise.friendly_token[0,20]
       end
     end
