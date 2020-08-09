@@ -13,5 +13,6 @@ class UsersController < ApplicationController
         end
 
         @user = User.find(@user.id)
+        @n_recipe = Recipe.where(:user_id => Integer(params[:id])).length
 	end
 end

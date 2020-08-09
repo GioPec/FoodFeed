@@ -1,14 +1,12 @@
 <div>
-<h2>Il tuo profilo:</h2>
-<div>User id: <%= @user.id %></div>
-<div>Username: <%= @user.username %></div>
-<div>Email: <%= @user.email %></div>
-<div>Nome: <%= @user.first_name %></div>
-<div>Cognome: <%= @user.last_name %></div>
-<img src= "<%= @user.img %>" height='50px'>
-<hr>
-<h2>Le tue ricette:</h2>
+    <div><h2>Profilo di <%= @user.username %> (#<%= @user.id %>)<h2></div>
+    <div>Email: <%= @user.email %></div>
+    <div>Nome: <%= @user.first_name %></div>
+    <div>Cognome: <%= @user.last_name %></div>
+    <img src= "<%= @user.img %>" height='50px'>
+    <hr>
 <div>
+    <h2><%= @n_recipe %> ricette:</h2>
     <% @user.recipes.each do |r| %>
         <%= r.title %><br>
         <%= r.preparazione %><br>
@@ -30,5 +28,4 @@
 
     <%= link_to "Add new recipe", new_user_recipe_path(current_user.id) %>
 
-<% else %>
 <% end %>

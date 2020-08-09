@@ -1,5 +1,11 @@
 <center>
-    <h1><%= @recipe.title %></h1><br>
+    <% if current_user.id.to_s == params[:user_id] %>
+        <%= link_to "Edit post", edit_user_recipe_path(current_user.id, @recipe.id) %> - 
+        <%= link_to "Remove post", user_recipe_path(current_user.id, @recipe.id), data: { confirm: "Are you sure?" }, :method => :delete %><br>
+    <% else %>
+    <% end %>
+
+    <h1><%= @recipe.title %></h1>
     <img src="<%= @recipe.img %>" height="600px"><br>
     <p><%= @recipe.preparazione %></p><br>
     <hr>

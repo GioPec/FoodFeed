@@ -1,6 +1,6 @@
-%h2 Add a recipe
+%h2 Edit recipe
 
-= form_tag user_recipes_path, :method => :post do
+= form_tag user_recipe_path(current_user.id, @recipe.id), :method => :put do
 
   = label :recipe, :title, 'Title'
   = text_field :recipe, :title
