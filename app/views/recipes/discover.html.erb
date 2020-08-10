@@ -1,0 +1,23 @@
+<center>
+    <h1>Discover</h1>
+    <% @recipes.each do |r| %>
+
+        <% url_recipe="/users/" + r.user_id.to_s + "/recipes/" + r.id.to_s %>    <!--creo il link-->
+        
+        <div style="border: solid black 1px">
+            
+            <% u = User.find(r.user_id) %>  <!--trovo l'utente che ha scritto la ricetta-->
+            <% url="/users/" + r.user_id.to_s %>    <!--creo il link-->
+            <h2><span>
+                <img src="<%= u.img %>" height="40px">
+                <a href=<%= url %>><%= u.username %></a>  <!--username cliccabile - titolo-->
+            </span></h2>
+            <a href=<%= url_recipe %>>
+                <img src="<%= r.img %>" height=400px>
+            </a><br>
+            <h2><%= r.title %></h2>
+            
+        </div>
+
+    <% end %>
+</center>
