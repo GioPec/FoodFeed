@@ -31,4 +31,19 @@ class RecipesController < ApplicationController
         @recipe.update_attributes!(params.require(:recipe).permit(:title, :preparazione, :img))
         redirect_to user_path(current_user.id)
     end
+
+    def daily
+        seed = Date.today.to_s.gsub('-','').to_i
+        srand(seed)
+        recipe_number = rand(1165539)
+        #puts(recipe_number)
+
+        #url = "https://api.spoonacular.com/recipes/random?apiKey=" + ENV["SPOONACULAR_KEY"]    #random
+        url = "https://api.spoonacular.com/recipes/" + recipe_number.to_s + "/information?apiKey=" + ENV["SPOONACULAR_KEY"]
+        @response = JSON.parse(Excon.get(url).body)
+    end
+
+    def discover
+        @recipes = Recipe.all().to_a.reverse
+    end
 end

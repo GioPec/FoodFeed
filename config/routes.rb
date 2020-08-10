@@ -11,4 +11,9 @@ Rails.application.routes.draw do
   resources :users do
     resources :recipes
   end
+
+  get '/dailyrecipe' => 'recipes#daily'
+
+  get '/discover' => 'recipes#discover'
+
 end

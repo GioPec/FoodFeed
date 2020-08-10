@@ -121,7 +121,12 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.3)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     erubi (1.9.0)
+    excon (0.76.0)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.13.1-x64-mingw32)
@@ -288,6 +293,9 @@ DEPENDENCIES
   cucumber-rails-training-wheels
   database_cleaner
   devise
+  dotenv
+  dotenv-rails
+  excon
   haml
   jbuilder (~> 2.7)
   launchy

@@ -30,6 +30,11 @@ gem 'wdm'
 
 gem 'devise'
 gem 'omniauth-facebook'
+#gem 'omniauth-google-oauth2'
+
+gem 'excon'
+gem 'dotenv-rails'
+gem 'dotenv'
 
 group :test do
   gem 'cucumber-rails', :require => false
