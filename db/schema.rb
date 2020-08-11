@@ -10,13 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_08_155955) do
+ActiveRecord::Schema.define(version: 2020_08_11_103906) do
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "recipe_id"
+    t.index ["recipe_id"], name: "index_likes_on_recipe_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
 
   create_table "recipes", force: :cascade do |t|
     t.integer "user_id"
     t.string "title", limit: 100, null: false
     t.string "preparazione", limit: 5000, null: false
     t.string "img", default: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+    t.integer "likes"
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 

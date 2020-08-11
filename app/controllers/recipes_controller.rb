@@ -4,7 +4,7 @@ class RecipesController < ApplicationController
 
     end
 
-    def create
+    def create      #data pubblicazione
         @user = User.find(current_user.id)
 		@recipe = @user.recipes.create!(params.require(:recipe).permit(:title, :preparazione, :img))
 		flash[:notice] = "A recipe from #{@user.username} has been successfully posted!"
@@ -46,4 +46,28 @@ class RecipesController < ApplicationController
     def discover
         @recipes = Recipe.all().to_a.reverse
     end
+
+    def like
+        id_recipe = params[:recipe_id]
+        r = Recipe.find(id_recipe)
+        if Like.exists?(user_id: current_user.id, recipe_id: id_recipe)
+            flash[:notice] = "You already like this post"
+        else
+            Like.create!(user_id: current_user.id, recipe_id: id_recipe)
+        end
+		redirect_to user_recipe_path(r.user_id, id_recipe)
+    end
+    
+    def remove_like
+        id_recipe = params[:recipe_id]
+        r = Recipe.find(id_recipe)
+        if Like.exists?(user_id: current_user.id, recipe_id: id_recipe)
+            @like = Like.where(user_id: current_user.id, recipe_id: id_recipe)
+            Like.delete(@like)
+        else
+            flash[:notice] = "You cannot dislike a post you don't like"
+        end
+		redirect_to user_recipe_path(r.user_id, id_recipe)
+    end
+    
 end
