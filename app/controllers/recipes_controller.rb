@@ -69,5 +69,10 @@ class RecipesController < ApplicationController
         end
 		redirect_to user_recipe_path(r.user_id, id_recipe)
     end
+
+    def create_comment
+        Comment.create!(body: params.require(:comment).permit(:body)[:body], user_id: current_user.id, recipe_id: params[:recipe_id], created_at: DateTime.now)
+        redirect_to user_recipe_path(current_user.id, params[:recipe_id])
+    end
     
 end

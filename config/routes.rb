@@ -19,4 +19,8 @@ Rails.application.routes.draw do
   get '/users/:user_id/recipes/:recipe_id/like/new' => 'recipes#like', as: 'like'
   delete '/users/:user_id/recipes/:recipe_id/like/delete' => 'recipes#remove_like', as: 'remove_like'
 
+  get '/users/:user_id/recipes/:recipe_id/comment/new' => 'recipes#new_comment', as: 'new_comment'
+  post '/users/:user_id/recipes/:recipe_id/comment' => 'recipes#create_comment', as: 'create_comment'
+  delete '/users/:user_id/recipes/:recipe_id/comment/delete' => 'recipes#remove_comment', as: 'remove_comment'
+
 end
