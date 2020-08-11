@@ -10,7 +10,7 @@
     <% @user.recipes.each do |r| %>
         <%= r.title %><br>
         <%= r.preparazione %><br>
-        <%= r.img %><br>
+        <img src="<%= r.img %>" height="50px"><br>
         <%= link_to "Recipe details", user_recipe_path(current_user.id, r.id) %><br>
         <hr>
     <% end %>
