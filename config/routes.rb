@@ -16,4 +16,7 @@ Rails.application.routes.draw do
 
   get '/discover' => 'recipes#discover'
 
+  get '/users/:user_id/recipes/:recipe_id/like/new' => 'recipes#like', as: 'like'
+  delete '/users/:user_id/recipes/:recipe_id/like/delete' => 'recipes#remove_like', as: 'remove_like'
+
 end

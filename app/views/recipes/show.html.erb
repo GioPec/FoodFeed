@@ -7,7 +7,39 @@
 
     <h1><%= @recipe.title %></h1>
     <img src="<%= @recipe.img %>" height="600px"><br>
+
+    <span>
+    
+        <div class="popup" onclick="showLikes()"><%= Like.where(recipe_id: @recipe.id).length %> likes
+            <span class="popuptext" id="myPopup">
+                <% Like.all.each do |l| %>
+                    <% if l.recipe_id.to_s == params[:id]%>
+                        <img src="<%= User.find(l.user_id).img %>" height="20px">
+                        <a href="/users/<%= l.user_id %>"><%= User.find(l.user_id).username %></a>
+                    <% end %>
+                    <br>
+                <% end %>
+            </span>
+        </div>
+        <br><br>
+
+        <% if Like.exists?(user_id: current_user.id, recipe_id: @recipe.id) %>
+            <%= button_to "Remove like", remove_like_path(current_user.id, @recipe.id), :method => :delete %>
+        <% else %>
+            <%= button_to "Like", like_path(current_user.id, @recipe.id), :method => :get %>
+        <% end %>
+    </span>
+
     <p><%= @recipe.preparazione %></p><br>
+
     <hr>
     <!-- todo: commenti -->
 </center>
+
+<script>
+// When the user clicks on <div>, open the popup
+function showLikes() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+</script>
