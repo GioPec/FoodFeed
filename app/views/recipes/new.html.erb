@@ -1,0 +1,11 @@
+<h2>Add a recipe</h2>
+
+<%= form_tag user_recipes_path(current_user.id), :method => :post do %>
+        <label>Title</label>
+        <%= text_field(:recipe, :title) %>
+        <label>Preparazione</label>
+        <%= text_field(:recipe, :preparazione) %>
+        <label>Image</label>
+        <%= text_field(:recipe, :img) %>
+        <button type="submit">Save changes</button>
+<% end %>

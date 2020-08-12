@@ -25,9 +25,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # DELETE /resource
-  # def destroy
-  #   super
-  # end
+  def destroy
+    rec = Recipe.where(:user_id => current_user.id).to_a
+    rec.each do |r|
+      Comment.where(:recipe_id => r).destroy_all
+      Like.where(:recipe_id => r).destroy_all
+    end
+
+    Recipe.where(:user_id => current_user.id).destroy_all
+    Comment.where(:user_id => current_user.id).destroy_all
+    Like.where(:user_id => current_user.id).destroy_all
+    super
+  end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign

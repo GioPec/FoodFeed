@@ -6,9 +6,8 @@ class RecipesController < ApplicationController
 
     def create      #data pubblicazione
         @user = User.find(current_user.id)
-        #@recipe = @user.recipes.create!(params.require(:recipe).permit(:title, :preparazione, :img))
-        @recipe = @user.recipes.create!(user_id: current_user.id, title: params.permit(:recipe).require(:title), preparazione: params.permit(:recipe).require(:preparazione),
-            img: params.permit(:recipe).require(:img), created_at: DateTime.now, n_likes: 0, n_comments: 0)
+        @recipe = Recipe.create!(user_id: current_user.id, title: params.require(:recipe).permit(:title)[:title], preparazione: params.require(:recipe).permit(:preparazione)[:preparazione],
+            img: params.require(:recipe).permit(:img)[:img], created_at: DateTime.now, n_likes: 0, n_comments: 0)
 		flash[:notice] = "A recipe from #{@user.username} has been successfully posted!"
 		redirect_to user_path(current_user.id)
     end
@@ -19,6 +18,8 @@ class RecipesController < ApplicationController
 
     def destroy
         Recipe.delete(params[:id])
+        Comment.where(:recipe_id => params[:id]).destroy_all
+        Like.where(:recipe_id => params[:id]).destroy_all
         redirect_to user_path(current_user.id)
     end
 
@@ -56,6 +57,8 @@ class RecipesController < ApplicationController
             flash[:notice] = "You already like this post"
         else
             Like.create!(user_id: current_user.id, recipe_id: id_recipe)
+            r.n_likes = r.n_likes+1
+            r.save
         end
 		redirect_to user_recipe_path(r.user_id, id_recipe)
     end
@@ -66,6 +69,8 @@ class RecipesController < ApplicationController
         if Like.exists?(user_id: current_user.id, recipe_id: id_recipe)
             @like = Like.where(user_id: current_user.id, recipe_id: id_recipe)
             Like.delete(@like)
+            r.n_likes = r.n_likes-1
+            r.save
         else
             flash[:notice] = "You cannot dislike a post you don't like"
         end
@@ -75,6 +80,22 @@ class RecipesController < ApplicationController
     def create_comment
         Comment.create!(body: params.require(:comment).permit(:body)[:body], user_id: current_user.id, recipe_id: params[:recipe_id], created_at: DateTime.now)
         redirect_to user_recipe_path(current_user.id, params[:recipe_id])
+        r = Recipe.find(params[:recipe_id])
+        r.n_comments = r.n_comments+1
+        r.save
+    end
+
+    def remove_comment
+        u = Comment.find(params[:id]).user_id
+        r = Recipe.find(params[:recipe_id])
+        if current_user.id == u
+            Comment.delete(params[:id])
+            r.n_comments = r.n_comments-1
+            r.save
+        else
+            flash[:notice] = "You cannot remove another user comment"
+        end
+        redirect_to user_recipe_path(r.user_id, r.id)
     end
     
 end
