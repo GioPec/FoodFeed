@@ -21,6 +21,6 @@ Rails.application.routes.draw do
 
   get '/users/:user_id/recipes/:recipe_id/comment/new' => 'recipes#new_comment', as: 'new_comment'
   post '/users/:user_id/recipes/:recipe_id/comment' => 'recipes#create_comment', as: 'create_comment'
-  delete '/users/:user_id/recipes/:recipe_id/comment/delete' => 'recipes#remove_comment', as: 'remove_comment'
+  delete '/users/:user_id/recipes/:recipe_id/comment/:id/delete' => 'recipes#remove_comment', as: 'remove_comment'
 
 end
