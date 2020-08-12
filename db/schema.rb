@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_11_120300) do
+ActiveRecord::Schema.define(version: 2020_08_12_075935) do
 
   create_table "comments", force: :cascade do |t|
     t.integer "user_id"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 2020_08_11_120300) do
     t.string "img", default: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
     t.integer "n_likes", default: 0
     t.integer "n_comments", default: 0
+    t.datetime "created_at"
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 

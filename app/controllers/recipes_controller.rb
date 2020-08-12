@@ -6,7 +6,9 @@ class RecipesController < ApplicationController
 
     def create      #data pubblicazione
         @user = User.find(current_user.id)
-		@recipe = @user.recipes.create!(params.require(:recipe).permit(:title, :preparazione, :img))
+        #@recipe = @user.recipes.create!(params.require(:recipe).permit(:title, :preparazione, :img))
+        @recipe = @user.recipes.create!(user_id: current_user.id, title: params.permit(:recipe).require(:title), preparazione: params.permit(:recipe).require(:preparazione),
+            img: params.permit(:recipe).require(:img), created_at: DateTime.now, n_likes: 0, n_comments: 0)
 		flash[:notice] = "A recipe from #{@user.username} has been successfully posted!"
 		redirect_to user_path(current_user.id)
     end
@@ -36,7 +38,7 @@ class RecipesController < ApplicationController
         seed = Date.today.to_s.gsub('-','').to_i
         srand(seed)
         recipe_number = rand(1165539)
-        #puts(recipe_number)
+        puts(recipe_number)
 
         #url = "https://api.spoonacular.com/recipes/random?apiKey=" + ENV["SPOONACULAR_KEY"]    #random
         url = "https://api.spoonacular.com/recipes/" + recipe_number.to_s + "/information?apiKey=" + ENV["SPOONACULAR_KEY"]
