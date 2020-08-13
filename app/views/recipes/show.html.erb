@@ -8,7 +8,7 @@
     <!-- title -->
     <h1><%= @recipe.title %></h1>
     <!-- img -->
-    <img src="<%= @recipe.img %>" height="600px"><br>
+    <img src="<%= url_for(@recipe.image) %>" height="600px"><br>
     <!-- datetime -->
     <% difference = (DateTime.now.utc - @recipe.created_at).to_i %>
         <% if difference < 60 %>
@@ -30,7 +30,11 @@
             <span class="popuptext" id="myPopup">
                 <% Like.all.each do |l| %>
                     <% if l.recipe_id.to_s == params[:id]%>
-                        <img src="<%= User.find(l.user_id).img %>" height="20px">
+                        <% if User.find(l.user_id).profile_img.attached? %>
+                            <img src="<%= url_for(User.find(l.user_id).profile_img) %>" height="20px">
+                        <% else %>
+                            <img src="<%= User.find(l.user_id).img %>" height="20px">
+                        <% end %>
                         <a href="/users/<%= l.user_id %>"><%= User.find(l.user_id).username %></a>
                     <% end %>
                     <br>
@@ -53,7 +57,11 @@
     <div><%= @recipe.n_comments %> comments<br>
         <% Comment.all.each do |c| %>
             <% if c.recipe_id.to_s == params[:id]%>
-                <img src="<%= User.find(c.user_id).img %>" height="20px">
+                <% if User.find(c.user_id).profile_img.attached? %>
+                    <img src="<%= url_for(User.find(c.user_id).profile_img) %>" height="20px">
+                <% else %>
+                    <img src="<%= User.find(c.user_id).img %>" height="20px">
+                <% end %>
                 <a href="/users/<%= c.user_id %>"><%= User.find(c.user_id).username %></a>
                 <% difference = (DateTime.now.utc - c.created_at).to_i %>
                     <% if difference < 60 %>

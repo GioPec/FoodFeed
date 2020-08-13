@@ -6,10 +6,17 @@ class RecipesController < ApplicationController
 
     def create      #data pubblicazione
         @user = User.find(current_user.id)
-        @recipe = Recipe.create!(user_id: current_user.id, title: params.require(:recipe).permit(:title)[:title], preparazione: params.require(:recipe).permit(:preparazione)[:preparazione],
-            img: params.require(:recipe).permit(:img)[:img], created_at: DateTime.now, n_likes: 0, n_comments: 0)
-		flash[:notice] = "A recipe from #{@user.username} has been successfully posted!"
-		redirect_to user_path(current_user.id)
+
+        if Recipe.create(user_id: current_user.id, title: params.require(:recipe).permit(:title)[:title], preparazione: params.require(:recipe).permit(:preparazione)[:preparazione],
+            image: params.require(:recipe).permit(:image)[:image], created_at: DateTime.now, n_likes: 0, n_comments: 0).valid?
+
+            flash[:notice] = "A recipe from #{@user.username} has been successfully posted!"
+            redirect_to user_path(current_user.id)
+        else
+            flash[:notice] = "Inputs can't be blank"
+            redirect_back(fallback_location: root_path)
+        end
+		
     end
 
     def show
@@ -31,8 +38,12 @@ class RecipesController < ApplicationController
     def update
         id = params[:id]
         @recipe = Recipe.find(id)
-        @recipe.update_attributes!(params.require(:recipe).permit(:title, :preparazione, :img))
-        redirect_to user_path(current_user.id)
+        if @recipe.update_attributes(params.require(:recipe).permit(:title, :preparazione))
+            redirect_to user_path(current_user.id)
+        else
+            flash[:notice] = "Inputs can't be blank"
+            redirect_back(fallback_location: root_path)
+        end    
     end
 
     def daily
