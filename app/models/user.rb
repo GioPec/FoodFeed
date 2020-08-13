@@ -5,9 +5,15 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook]
 
+    validates :username, presence: true
+    validates :first_name, presence: true
+    validates :last_name, presence: true
+
     has_many :recipes
     has_many :likes
     has_many :comments
+
+    has_one_attached :profile_img
 
     def self.from_omniauth(auth) 
       where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

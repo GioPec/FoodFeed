@@ -36,6 +36,10 @@ gem 'excon'
 gem 'dotenv-rails'
 gem 'dotenv'
 
+gem 'simple_form'
+gem 'bootstrap'
+gem 'jquery-rails'
+
 group :test do
   gem 'cucumber-rails', :require => false
   gem 'cucumber-rails-training-wheels'

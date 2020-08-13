@@ -3,14 +3,18 @@
     <div>Email: <%= @user.email %></div>
     <div>Nome: <%= @user.first_name %></div>
     <div>Cognome: <%= @user.last_name %></div>
-    <img src= "<%= @user.img %>" height='50px'>
+    <% if @user.profile_img.attached? %>
+        <img src="<%= url_for(@user.profile_img) %>" height='50px'>
+    <% else %>
+        <img src="<%= @user.img %>" height='50px'>
+    <% end %>
     <hr>
 <div>
     <h2><%= @n_recipe %> ricette:</h2>
     <% @user.recipes.each do |r| %>
         <%= r.title %><br>
         <%= r.preparazione %><br>
-        <img src="<%= r.img %>" height="50px"><br>
+        <img src="<%= url_for(r.image) %>" height="50px"><br>
         <%= link_to "Recipe details", user_recipe_path(current_user.id, r.id) %><br>
         <hr>
     <% end %>
@@ -24,7 +28,7 @@
 
     <%= link_to 'Logout', destroy_user_session_path, :method => :delete %><br>
 
-    <%= link_to "Delete your profile", user_registration_path, :method => :delete %><br><br>
+    <%= link_to "Delete your profile", user_registration_path, data: { confirm: "Are you sure?" }, :method => :delete %><br><br>
 
     <%= link_to "Add new recipe", new_user_recipe_path(current_user.id) %>
 

@@ -22,13 +22,17 @@
             <% u = User.find(r.user_id) %>  <!--trovo l'utente che ha scritto la ricetta-->
             <% url="/users/" + r.user_id.to_s %>    <!--creo il link-->
             <h2><span>
-                <img src="<%= u.img %>" height="40px">
+                <% if u.profile_img.attached? %>
+                    <img src="<%= url_for(u.profile_img) %>" height="40px">
+                <% else %>
+                    <img src="<%= u.img %>" height="40px">
+                <% end %>
                 <a href=<%= url %>><%= u.username %></a>  <!--username cliccabile - titolo-->
             </span></h2>
 
             <% url_recipe="/users/" + r.user_id.to_s + "/recipes/" + r.id.to_s %>    <!--creo il link-->
             <a href=<%= url_recipe %>>
-                <img src="<%= r.img %>" height=400px>
+                <img src="<%= url_for(r.image) %>" height=400px>
             </a><br>
 
             <h2><%= r.title %></h2>
