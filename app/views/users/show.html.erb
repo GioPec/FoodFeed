@@ -32,4 +32,9 @@
 
     <%= link_to "Add new recipe", new_user_recipe_path(current_user.id) %>
 
+<% elsif current_user.has_role? :mod, @user %>
+
+    <%= link_to "Disable account", disable_account_path(@user.id), data: { confirm: "Are you sure?" } %><br>
+    <%= link_to "Re-enable account", enable_account_path(@user.id), data: { confirm: "Are you sure?" } %>
+
 <% end %>
