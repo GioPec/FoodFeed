@@ -6,10 +6,11 @@ class RecipesController < ApplicationController
 
     def create      #data pubblicazione
         @user = User.find(current_user.id)
+        r = Recipe.create(user_id: current_user.id, title: params.require(:recipe).permit(:title)[:title], preparazione: params.require(:recipe).permit(:preparazione)[:preparazione],
+        image: params.require(:recipe).permit(:image)[:image], created_at: DateTime.now, n_likes: 0, n_comments: 0)
 
-        if Recipe.create(user_id: current_user.id, title: params.require(:recipe).permit(:title)[:title], preparazione: params.require(:recipe).permit(:preparazione)[:preparazione],
-            image: params.require(:recipe).permit(:image)[:image], created_at: DateTime.now, n_likes: 0, n_comments: 0).valid?
-
+        if r.valid?
+            current_user.add_role :mod, r
             flash[:notice] = "A recipe from #{@user.username} has been successfully posted!"
             redirect_to user_path(current_user.id)
         else
@@ -24,10 +25,15 @@ class RecipesController < ApplicationController
     end
 
     def destroy
-        Recipe.delete(params[:id])
-        Comment.where(:recipe_id => params[:id]).destroy_all
-        Like.where(:recipe_id => params[:id]).destroy_all
-        redirect_to user_path(current_user.id)
+        if current_user.has_role? :mod, Recipe.find(params[:id])
+            Recipe.delete(params[:id])
+            Comment.where(:recipe_id => params[:id]).destroy_all	            
+            Like.where(:recipe_id => params[:id]).destroy_all          
+            redirect_to user_path(current_user.id)
+        else
+            flash[:notice] = "You are not allowed to do this"
+            redirect_back(fallback_location: root_path)
+        end
     end
 
     def edit
@@ -89,24 +95,24 @@ class RecipesController < ApplicationController
     end
 
     def create_comment
-        Comment.create!(body: params.require(:comment).permit(:body)[:body], user_id: current_user.id, recipe_id: params[:recipe_id], created_at: DateTime.now)
+        c = Comment.create!(body: params.require(:comment).permit(:body)[:body], user_id: current_user.id, recipe_id: params[:recipe_id], created_at: DateTime.now)
+        current_user.add_role :mod, c #role
         redirect_to user_recipe_path(current_user.id, params[:recipe_id])
         r = Recipe.find(params[:recipe_id])
         r.n_comments = r.n_comments+1
         r.save
     end
 
-    def remove_comment
+    def remove_comment  
         u = Comment.find(params[:id]).user_id
         r = Recipe.find(params[:recipe_id])
-        if current_user.id == u
+        if current_user.has_role? :mod, Comment.find(params[:id]) 
             Comment.delete(params[:id])
             r.n_comments = r.n_comments-1
             r.save
         else
-            flash[:notice] = "You cannot remove another user comment"
+            flash[:notice] = "You are not allowed to do this"
         end
         redirect_to user_recipe_path(r.user_id, r.id)
     end
-    
 end
