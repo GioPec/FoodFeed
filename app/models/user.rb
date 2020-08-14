@@ -1,4 +1,13 @@
 class User < ApplicationRecord
+  resourcify
+
+  after_create :assign_default_role
+  def assign_default_role
+    self.add_role(:user)
+  end
+
+  rolify
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -14,6 +23,8 @@ class User < ApplicationRecord
     has_many :comments
 
     has_one_attached :profile_img
+
+    # ROLES = ['Admin', 'Moderator', 'User']
 
     def self.from_omniauth(auth) 
       where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

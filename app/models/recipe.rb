@@ -1,4 +1,5 @@
 class Recipe < ActiveRecord::Base
+    resourcify
 
     validates :image, presence: true
     validates :title, presence: true

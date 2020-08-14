@@ -40,6 +40,8 @@ gem 'simple_form'
 gem 'bootstrap'
 gem 'jquery-rails'
 
+gem 'rolify'
+
 group :test do
   gem 'cucumber-rails', :require => false
   gem 'cucumber-rails-training-wheels'
