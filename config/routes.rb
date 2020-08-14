@@ -23,4 +23,8 @@ Rails.application.routes.draw do
   post '/users/:user_id/recipes/:recipe_id/comment' => 'recipes#create_comment', as: 'create_comment'
   delete '/users/:user_id/recipes/:recipe_id/comment/:id/delete' => 'recipes#remove_comment', as: 'remove_comment'
 
+  get '/users/:id/disable' => 'users#disable', as: 'disable_account'
+  get '/users/:id/enable' => 'users#enable', as: 'enable_account'
+  get '/disabled' => 'users#disabled', as: 'disabled'
+
 end
