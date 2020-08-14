@@ -1,7 +1,12 @@
 class UsersController < ApplicationController
 
     def index
-        @users = User.all
+        if current_user.role!="U"
+            @users = User.all
+        else
+            flash[:notice] = "You are not allowed on this page"
+            redirect_back(fallback_location: root_path)
+        end
     end
 
     def show
@@ -40,7 +45,23 @@ class UsersController < ApplicationController
         end
     end
 
-    def disabled
-        
+    def upgrade
+        u=User.find(params[:id])
+        u.add_role :mod, Comment
+        u.add_role :mod, User
+        u.add_role :mod, Recipe
+        u.role="M"
+        u.save
+        redirect_back(fallback_location: root_path)
+    end
+
+    def downgrade
+        u=User.find(params[:id])
+        u.remove_role :mod, Comment
+        u.remove_role :mod, User
+        u.remove_role :mod, Recipe
+        u.role="U"
+        u.save
+        redirect_back(fallback_location: root_path)
     end
 end
