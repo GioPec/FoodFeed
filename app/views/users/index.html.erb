@@ -1,3 +1,7 @@
+<% if current_user.has_role? :admin %>
+    <% a=false %>
+<% else a=true %>
+<% end %>
 <div>
     <h2>Users</h2>
     <table>
@@ -21,10 +25,28 @@
                 <th>show</th>
                 <th>upgrade</th>
                 <th>downgrade</th>
+                <th>disable</th>
+                <th>enable</th>
             </tr>
         </thead>
         <tbody>
             <% @users.each do |u| %>
+
+                <% if u.id==current_user.id %>
+                    <% b=true %>
+                <% else b=false%>
+                <% end %>
+
+                <% if u.disabled==true %>
+                    <% c=true %>
+                <% else c=false%>
+                <% end %>
+
+                <% if u.role=="M" %>
+                    <% d=true %>
+                <% else d=false%>
+                <% end %>
+
                 <tr>
                     <td><%= u.id %></td>
                     <td><%= u.username %></td>
@@ -41,9 +63,11 @@
                     <td><%= u.updated_at %></td>
                     <td><%= u.role %></td>
                     <td><%= u.disabled %></td>
-                    <td><%= link_to "show", user_path(u.id) %></td>
-                    <td><%= link_to "upgrade", upgrade_path(u.id) %></td>
-                    <td><%= link_to "downgrade", downgrade_path(u.id) %></td>
+                    <td><%= button_to "show", user_path(u.id), :method => :get %></td>
+                    <td><%= button_to "upgrade", upgrade_path(u.id), disabled: (a||b||d), :method => :get %></td>
+                    <td><%= button_to "downgrade", downgrade_path(u.id), disabled: (a||b||!d), :method => :get %></td>
+                    <td><%= button_to "disable", disable_account_path(u.id), disabled: (b||c), data: { confirm: "Are you sure?" }, :method => :get %></td>
+                    <td><%= button_to "enable", enable_account_path(u.id), disabled: (b||!c), data: { confirm: "Are you sure?" }, :method => :get %></td>
                 </tr>
             <% end%>
         </tbody>

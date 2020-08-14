@@ -29,4 +29,6 @@ Rails.application.routes.draw do
   get '/users/:id/upgrade' => 'users#upgrade', as: 'upgrade'
   get '/users/:id/downgrade' => 'users#downgrade', as: 'downgrade'
 
+  get '/contact' => 'users#contact', as: 'contact'
+
 end
