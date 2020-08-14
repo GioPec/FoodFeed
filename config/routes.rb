@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   #devise_for :users, controllers: { registrations: 'users/registrations' }
 
-  root :to  => redirect('/users')
+  root :to  => redirect('/discover')
 
   resources :users do
     resources :recipes
@@ -25,6 +25,8 @@ Rails.application.routes.draw do
 
   get '/users/:id/disable' => 'users#disable', as: 'disable_account'
   get '/users/:id/enable' => 'users#enable', as: 'enable_account'
-  get '/disabled' => 'users#disabled', as: 'disabled'
+
+  get '/users/:id/upgrade' => 'users#upgrade', as: 'upgrade'
+  get '/users/:id/downgrade' => 'users#downgrade', as: 'downgrade'
 
 end

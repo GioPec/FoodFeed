@@ -16,7 +16,11 @@
                 <th>role</th>
                 <th>created_at</th>
                 <th>updated_at</th>
+                <th>role</th>
+                <th>disabled</th>
                 <th>show</th>
+                <th>upgrade</th>
+                <th>downgrade</th>
             </tr>
         </thead>
         <tbody>
@@ -35,7 +39,11 @@
                     <td><%= u.role %></td>
                     <td><%= u.created_at %></td>
                     <td><%= u.updated_at %></td>
+                    <td><%= u.role %></td>
+                    <td><%= u.disabled %></td>
                     <td><%= link_to "show", user_path(u.id) %></td>
+                    <td><%= link_to "upgrade", upgrade_path(u.id) %></td>
+                    <td><%= link_to "downgrade", downgrade_path(u.id) %></td>
                 </tr>
             <% end%>
         </tbody>
