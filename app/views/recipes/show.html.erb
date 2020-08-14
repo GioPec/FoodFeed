@@ -1,8 +1,9 @@
 <center>
     <% if current_user.id.to_s == params[:user_id] %>
         <%= link_to "Edit post", edit_user_recipe_path(current_user.id, @recipe.id) %> - 
-        <%= link_to "Remove post", user_recipe_path(current_user.id, @recipe.id), data: { confirm: "Are you sure?" }, :method => :delete %><br>
-    <% else %>
+    <% end %>
+    <% if current_user.has_role? :mod, @recipe %>
+    <%= link_to "Remove post", user_recipe_path(current_user.id, @recipe.id), data: { confirm: "Are you sure?" }, :method => :delete %><br>
     <% end %>
 
     <!-- title -->
