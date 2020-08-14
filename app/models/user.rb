@@ -14,7 +14,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook]
 
-    validates :username, presence: true
+    validates :username, presence: true, uniqueness: { case_sensitive: false }
     validates :first_name, presence: true
     validates :last_name, presence: true
 
@@ -32,10 +32,10 @@ class User < ApplicationRecord
         #user.gender = auth.extra.gender
         #user.date_of_birth = auth.info.birthday
         username = auth.info.name
-        user.username = username
         names = username.split
         user.first_name = names[0]
         user.last_name = names[names.length-1]
+        user.username = names[0] + names[names.length-1]
         user.img = auth.info.image
         user.password = Devise.friendly_token[0,20]
       end
@@ -47,5 +47,13 @@ class User < ApplicationRecord
           user.email = data["email"] if user.email.blank?
             end
         end
+    end
+
+    def self.search(search)
+      if search
+        find(:all, :conditions => ['name LIKE ?', "%#{search}%"])
+      else
+        find(:all)
+      end
     end
 end

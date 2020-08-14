@@ -68,4 +68,13 @@ class UsersController < ApplicationController
     def contact
 
     end
+
+    def search
+        @user = User.find_by(username: params[:search])
+        if @user
+            
+        else
+            render inline: '<center><h1>404 - NOT FOUND</h1><a href="http://localhost:3000">go back</a></center>'
+        end
+    end
 end

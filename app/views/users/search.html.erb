@@ -1,0 +1,12 @@
+<center>
+    <br><br>
+    <h1>Result</h1><hr>
+
+    <h2><%= link_to @user.username, user_path(@user.id) %></h2><br>
+    <% if @user.profile_img.attached? %>
+        <img src="<%= url_for(@user.profile_img) %>" height="300px">
+    <% else %>
+        <img src="<%= @user.img %>" height="300px">
+    <% end %>
+
+</center>

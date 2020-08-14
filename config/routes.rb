@@ -30,5 +30,6 @@ Rails.application.routes.draw do
   get '/users/:id/downgrade' => 'users#downgrade', as: 'downgrade'
 
   get '/contact' => 'users#contact', as: 'contact'
+  get '/search' => 'users#search', as: 'search'
 
 end
