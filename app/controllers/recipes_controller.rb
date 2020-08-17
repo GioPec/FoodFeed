@@ -21,6 +21,7 @@ class RecipesController < ApplicationController
     end
 
     def show
+
         @recipe = Recipe.find(params[:id])
     end
 
@@ -64,6 +65,7 @@ class RecipesController < ApplicationController
     end
 
     def discover
+        $CU = current_user.id
         @recipes = Recipe.all().to_a.reverse
     end
 
