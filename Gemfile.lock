@@ -134,6 +134,11 @@ GEM
     erubi (1.9.0)
     excon (0.76.0)
     execjs (2.7.0)
+    factory_bot (6.1.0)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.1.0)
+      factory_bot (~> 6.1.0)
+      railties (>= 5.0.0)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.13.1-x64-mingw32)
@@ -334,6 +339,7 @@ DEPENDENCIES
   dotenv
   dotenv-rails
   excon
+  factory_bot_rails
   haml
   jbuilder (~> 2.7)
   jquery-rails
@@ -353,9 +359,6 @@ DEPENDENCIES
   wdm
   web-console (>= 3.3.0)
   webpacker (~> 4.0)
-
-RUBY VERSION
-   ruby 2.6.6p146
 
 BUNDLED WITH
    2.1.4

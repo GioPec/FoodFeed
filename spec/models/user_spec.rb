@@ -1,77 +1,39 @@
-require 'rails_helper'
-
-RSpec.describe User, type: :model do
-
-  describe "Creating a User with an invalid email" do
-    it "shouldn't be permitted" do
-      user = User.create(email: 'user',
-                   password: 'password1234',
-                   password_confirmation: 'password1234',
-                   username: 'user1234',
-                   first_name: 'user',
-                   last_name: '1234')
-      expect(user).to_not be_valid
-    end
+require "rails_helper"
+RSpec.describe User, :type => :model do
+  after(:all) do
+    @user1.destroy
   end
 
-  describe "Creating a User with an invalid username" do
-    it "shouldn't be permitted" do
-      user = User.create(email: 'user@mail.it',
-                   password: 'password1234',
-                   password_confirmation: 'password1234',
-                   username: nil,
-                   first_name: 'user',
-                   last_name: '1234')
-      expect(user).to_not be_valid
-    end
+  before(:all) do
+    @user1 = create(:user)
   end
-
-  describe "Creating a User with an invalid first name" do
-    it "shouldn't be permitted" do
-      user = User.create(email: 'user@mail.it',
-                   password: 'password1234',
-                   password_confirmation: 'password1234',
-                   username: 'user1234',
-                   first_name: nil,
-                   last_name: '1234')
-      expect(user).to_not be_valid
-    end
+  
+  it "is valid with valid attributes" do
+    expect(@user1).to be_valid
   end
-
-  describe "Creating a User with an invalid last name" do
-    it "shouldn't be permitted" do
-      user = User.create(email: 'user@mail.it',
-                   password: 'password1234',
-                   password_confirmation: 'password1234',
-                   username: 'user1234',
-                   first_name: 'user',
-                   last_name: nil)
-      expect(user).to_not be_valid
-    end
+  
+  it "has a unique username" do
+    user2 = build(:user, email: "bob@gmail.com")
+    expect(user2).to_not be_valid
   end
-
-  describe "Creating a User with password and password confirmation not matching" do
-    it "shouldn't be permitted" do
-      user = User.create(email: 'user@mail.it',
-                   password: 'password1234',
-                   password_confirmation: 'wrong_password',
-                   username: 'user1234',
-                   first_name: 'user',
-                   last_name: '1234')
-      expect(user).to_not be_valid
-    end
+  
+  it "has a unique email" do
+    user2 = build(:user, username: "Bob")
+    expect(user2).to_not be_valid
   end
-
-  describe "Creating a User with a password shorter than 8 characters" do
-    it "shouldn't be permitted" do
-      user = User.create(email: 'user@mail.it',
-                   password: '1234',
-                   password_confirmation: '1234',
-                   username: 'user1234',
-                   first_name: 'user',
-                   last_name: '1234')
-      expect(user).to_not be_valid
-    end
+  
+  it "is not valid without a password" do 
+    user2 = build(:user, password: nil)
+    expect(user2).to_not be_valid
   end
-
+  
+  it "is not valid without a username" do 
+    user2 = build(:user, username: nil)
+    expect(user2).to_not be_valid
+  end
+  
+  it "is not valid without an email" do
+    user2 = build(:user, email: nil)
+    expect(user2).to_not be_valid
+  end
 end

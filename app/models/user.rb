@@ -17,6 +17,7 @@ class User < ApplicationRecord
     validates :username, presence: true, uniqueness: { case_sensitive: false }
     validates :first_name, presence: true
     validates :last_name, presence: true
+    validates :email, uniqueness: true ##
 
     has_many :recipes
     has_many :likes
