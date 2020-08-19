@@ -77,4 +77,8 @@ class UsersController < ApplicationController
             render inline: '<center><h1>404 - NOT FOUND</h1><a href="http://localhost:3000">go back</a></center>'
         end
     end
+
+    def favourites
+        @favourites = Favourite.where(user_id: current_user.id)
+    end
 end

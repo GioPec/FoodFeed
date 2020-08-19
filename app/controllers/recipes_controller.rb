@@ -117,4 +117,31 @@ class RecipesController < ApplicationController
         end
         redirect_to user_recipe_path(r.user_id, r.id)
     end
+
+    def favourite
+        id_recipe = params[:recipe_id]
+        r = Recipe.find(id_recipe)
+        if Favourite.exists?(user_id: current_user.id, recipe_id: id_recipe)
+            flash[:notice] = "You already have this recipe in your favourites"
+        else
+            Favourite.create!(user_id: current_user.id, recipe_id: id_recipe)
+        end
+		redirect_to user_recipe_path(r.user_id, id_recipe)
+    end
+
+    def remove_favourite
+        id_recipe = params[:recipe_id]
+        r = Recipe.find(id_recipe)
+        if Favourite.exists?(user_id: current_user.id, recipe_id: id_recipe)
+            @favourite = Favourite.where(user_id: current_user.id, recipe_id: id_recipe)
+            Favourite.delete(@favourite)
+        else
+            flash[:notice] = "You don't have this recipe in your favourites"
+        end
+		redirect_to user_recipe_path(r.user_id, id_recipe)
+    end
+
+    def top
+        @recipes = Recipe.all().to_a.sort_by{|e| -e[:n_likes]}
+    end
 end

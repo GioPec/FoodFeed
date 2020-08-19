@@ -32,4 +32,10 @@ Rails.application.routes.draw do
   get '/contact' => 'users#contact', as: 'contact'
   get '/search' => 'users#search', as: 'search'
 
+  get '/users/:user_id/recipes/:recipe_id/favourite/new' => 'recipes#favourite', as: 'favourite'
+  delete '/users/:user_id/recipes/:recipe_id/favourite/delete' => 'recipes#remove_favourite', as: 'remove_favourite'
+  get '/users/:user_id/favourites' => 'users#favourites', as: 'favourites'
+
+  get '/top' => 'recipes#top'
+
 end

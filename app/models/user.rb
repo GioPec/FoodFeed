@@ -22,6 +22,7 @@ class User < ApplicationRecord
     has_many :recipes
     has_many :likes
     has_many :comments
+    has_many :favourites
 
     has_one_attached :profile_img
 
