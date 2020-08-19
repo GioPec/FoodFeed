@@ -1,7 +1,7 @@
 class Recipe < ActiveRecord::Base
     resourcify
 
-    #validates :image, presence: true   #verificare
+    validates :image, presence: true   #verificare
     validates :title, presence: true
     validates :preparazione, presence: true
 
