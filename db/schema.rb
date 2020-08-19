@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_19_093016) do
+ActiveRecord::Schema.define(version: 2020_08_19_154009) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -64,6 +64,12 @@ ActiveRecord::Schema.define(version: 2020_08_19_093016) do
     t.integer "n_likes"
     t.integer "n_comments"
     t.datetime "created_at"
+    t.string "category", default: ""
+    t.string "course", default: ""
+    t.string "intolerance", default: ""
+    t.integer "price", default: 1
+    t.integer "difficulty", default: 1
+    t.integer "time", default: 0
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 
