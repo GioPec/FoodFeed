@@ -1,0 +1,32 @@
+<center>
+    <h1>Favourites</h1><hr>
+
+        <% if @favourites.to_a.length==0 %>
+            <p>You still haven't added recipes in your favourites :(</p>
+        <% end %>
+
+        <% @favourites.each do |f| %>
+
+            <% r = Recipe.find(f.recipe_id) %>
+            <% u = User.find(f.user_id) %>
+            <% url="/users/" + r.user_id.to_s %>    <!--creo il link-->
+            <h3><span>
+                <% if u.profile_img.attached? %>
+                    <img src="<%= url_for(u.profile_img) %>" height="40px">
+                <% else %>
+                    <img src="<%= u.img %>" height="40px">
+                <% end %>
+                <a href=<%= url %>><%= u.username %></a>  <!--username cliccabile - titolo-->
+            </span></h3>
+            <!-- title -->
+            <h3><%= r.title %></h3>
+            <!-- img -->
+            <% url_recipe="/users/" + r.user_id.to_s + "/recipes/" + r.id.to_s %>    <!--creo il link-->
+            <a href=<%= url_recipe %>>
+                <img src="<%= url_for(r.image) %>" height=400px>
+            </a><br>
+            <!-- preparazione -->
+            <p><%= r.preparazione %></p><br>
+            <hr>
+        <% end %>
+</center>

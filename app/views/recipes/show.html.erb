@@ -49,6 +49,12 @@
         <% else %>
             <%= button_to "Like", like_path(current_user.id, @recipe.id), :method => :get %>
         <% end %>
+        <!-- favourite -->
+        <% if Favourite.exists?(user_id: current_user.id, recipe_id: @recipe.id) %>
+            <%= button_to "Remove from favourites", remove_favourite_path(current_user.id, @recipe.id), :method => :delete %>
+        <% else %>
+            <%= button_to "Favourites", favourite_path(current_user.id, @recipe.id), :method => :get %>
+        <% end %>
     </span>
     <!-- preparazione -->
     <p><%= @recipe.preparazione %></p><br>
