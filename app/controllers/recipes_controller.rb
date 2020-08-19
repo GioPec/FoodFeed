@@ -6,8 +6,16 @@ class RecipesController < ApplicationController
 
     def create      #data pubblicazione
         @user = User.find(current_user.id)
-        r = Recipe.create(user_id: current_user.id, title: params.require(:recipe).permit(:title)[:title], preparazione: params.require(:recipe).permit(:preparazione)[:preparazione],
-        image: params.require(:recipe).permit(:image)[:image], created_at: DateTime.now, n_likes: 0, n_comments: 0)
+        r = Recipe.create(user_id: current_user.id, title: params.require(:recipe).permit(:title)[:title],
+            preparazione: params.require(:recipe).permit(:preparazione)[:preparazione],
+            image: params.require(:recipe).permit(:image)[:image],
+            course: params.require(:recipe).permit(:course)[:course],
+            category: params.require(:recipe).permit(:category)[:category],
+            intolerance: params.require(:recipe).permit(:intolerance)[:intolerance],
+            price: params.require(:recipe).permit(:price)[:price],
+            difficulty: params.require(:recipe).permit(:difficulty)[:difficulty],
+            time: params.require(:recipe).permit(:time)[:time],
+            created_at: DateTime.now, n_likes: 0, n_comments: 0)
 
         if r.valid?
             current_user.add_role :mod, r
@@ -142,6 +150,6 @@ class RecipesController < ApplicationController
     end
 
     def top
-        @recipes = Recipe.all().to_a.sort_by{|e| -e[:n_likes]}
+        @recipes = Recipe.all().to_a.sort_by{|e| -e[:n_likes]}.first(5)
     end
 end
