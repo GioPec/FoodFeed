@@ -35,7 +35,23 @@ class Users::RegistrationsController < Devise::RegistrationsController
     Recipe.where(:user_id => current_user.id).destroy_all
     Comment.where(:user_id => current_user.id).destroy_all
     Like.where(:user_id => current_user.id).destroy_all
-    Favourites.where(:user_id => current_user.id).destroy_all
+    Favourite.where(:user_id => current_user.id).destroy_all
+    fol = Follow.where(:follower_id => current_user.id).to_a
+    fol.each do |f|
+      us=User.where(:id => f.following_id)
+      us.each do |u|
+        u.n_follower=u.n_follower-1
+        u.save
+      end
+    end
+    fol = Follow.where(:following_id => current_user.id).to_a
+    fol.each do |f|
+      us=User.where(:id => f.follower_id)
+      us.each do |u|
+        u.n_following=u.n_following-1
+        u.save
+      end
+    end
     super
   end
 

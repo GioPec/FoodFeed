@@ -1,12 +1,21 @@
 <div>
-    <div><h2>Profilo di <%= @user.username %> (#<%= @user.id %>)<h2></div>
-    <div>Email: <%= @user.email %></div>
-    <div>Nome: <%= @user.first_name %></div>
-    <div>Cognome: <%= @user.last_name %></div>
+    <h2>Profilo di <%= @user.username %> (#<%= @user.id %>)</h2>
+    Email: <%= @user.email %><br>
+    Nome: <%= @user.first_name %><br>
+    Cognome: <%= @user.last_name %><br>
+    Followers: <%= @user.n_follower %><br>
+    Following: <%= @user.n_following %><br>
     <% if @user.profile_img.attached? %>
         <img src="<%= url_for(@user.profile_img) %>" height='50px'>
     <% else %>
         <img src="<%= @user.img %>" height='50px'>
+    <% end %>
+
+    <% if current_user.id==@user.id %>
+    <% elsif Follow.exists?(follower_id: current_user.id, following_id: @user.id) %>
+        <%= button_to "Unfollow", unfollow_path(@user.id, current_user.id), :method => :delete %>
+    <% else %>
+        <%= button_to "Follow", follow_path(@user.id, current_user.id), :method => :get %>
     <% end %>
     <hr>
 <div>
