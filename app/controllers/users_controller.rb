@@ -81,4 +81,46 @@ class UsersController < ApplicationController
     def favourites
         @favourites = Favourite.where(user_id: current_user.id)
     end
+
+    def follow
+        follower = User.find(params[:follower_id])
+        id_following = params[:user_id]
+        f = User.find(id_following)
+        if Follow.exists?(follower_id: follower.id, following_id: id_following)
+            flash[:notice] = "You already follow this user"
+            redirect_back(fallback_location: root_path)
+        elsif id_following==current_user.id
+            flash[:notice] = "You can't follow yourself"
+            redirect_back(fallback_location: root_path)
+        else
+            Follow.create!(follower_id: follower.id, following_id: id_following)
+            follower.n_following = follower.n_following+1
+            follower.save
+            f.n_follower = f.n_follower+1
+            f.save
+            redirect_to user_path(id_following)
+        end
+		
+    end
+    
+    def unfollow
+        follower = User.find(params[:follower_id])
+        id_following = params[:user_id]
+        f = User.find(id_following)
+        if Follow.exists?(follower_id: follower.id, following_id: id_following)
+            follow = Follow.where(follower_id: follower.id, following_id: id_following)
+            Follow.delete(follow)
+            follower.n_following = follower.n_following-1
+            follower.save
+            f.n_follower = f.n_follower-1
+            f.save
+            redirect_to user_path(id_following)
+        elsif id_following==current_user.id
+            flash[:notice] = "You can't follow yourself"
+            redirect_back(fallback_location: root_path)
+        else
+            flash[:notice] = "You already follow this user"
+            redirect_back(fallback_location: root_path)
+        end
+    end
 end

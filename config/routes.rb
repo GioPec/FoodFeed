@@ -40,4 +40,7 @@ Rails.application.routes.draw do
 
   get '/top' => 'recipes#top'
 
+  get '/users/:user_id/follow/:follower_id' => 'users#follow', as: 'follow'
+  delete '/users/:user_id/unfollow/:follower_id' => 'users#unfollow', as: 'unfollow'
+
 end

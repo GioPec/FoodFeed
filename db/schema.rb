@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_19_154009) do
+ActiveRecord::Schema.define(version: 2020_08_20_161314) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -47,6 +47,13 @@ ActiveRecord::Schema.define(version: 2020_08_19_154009) do
     t.integer "recipe_id"
     t.index ["recipe_id"], name: "index_favourites_on_recipe_id"
     t.index ["user_id"], name: "index_favourites_on_user_id"
+  end
+
+  create_table "follows", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "following_id"
+    t.index ["follower_id"], name: "index_follows_on_follower_id"
+    t.index ["following_id"], name: "index_follows_on_following_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -104,6 +111,8 @@ ActiveRecord::Schema.define(version: 2020_08_19_154009) do
     t.string "provider"
     t.string "uid"
     t.boolean "disabled", default: false
+    t.integer "n_follower", default: 0
+    t.integer "n_following", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
