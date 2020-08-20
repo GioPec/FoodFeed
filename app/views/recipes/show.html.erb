@@ -10,6 +10,20 @@
     <h1><%= @recipe.title %></h1>
     <!-- img -->
     <img src="<%= url_for(@recipe.image) %>" height="600px"><br>
+    <!--course-->
+    <% if @recipe.course!="" %>
+        Course: <%= @recipe.course %><br>
+    <% end %>
+    <% if @recipe.category!="" %>
+        Category: <%= @recipe.category %><br>
+    <% end %>
+    <% if @recipe.intolerance!="" %>
+        Intolerance: <%= @recipe.intolerance %><br>
+    <% end %>
+    Price: <%= @recipe.price %><br>
+    Difficulty: <%= @recipe.difficulty %><br>
+    Time: <%= @recipe.time %> minutes<br><br>
+
     <!-- datetime -->
     <% difference = (DateTime.now.utc - @recipe.created_at).to_i %>
         <% if difference < 60 %>
