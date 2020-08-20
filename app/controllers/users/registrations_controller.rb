@@ -35,6 +35,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     Recipe.where(:user_id => current_user.id).destroy_all
     Comment.where(:user_id => current_user.id).destroy_all
     Like.where(:user_id => current_user.id).destroy_all
+    Favourites.where(:user_id => current_user.id).destroy_all
     super
   end
 
