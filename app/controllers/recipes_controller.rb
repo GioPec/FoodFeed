@@ -53,12 +53,13 @@ class RecipesController < ApplicationController
     def update
         id = params[:id]
         @recipe = Recipe.find(id)
-        if @recipe.update_attributes(params.require(:recipe).permit(:title, :preparazione))
-            redirect_to user_path(current_user.id)
+        if @recipe.update_attributes(params.require(:recipe).permit(:title, :preparazione, :course, :category,
+             :intolerance, :price, :difficulty, :time))
+            redirect_to user_recipe_path(current_user.id, @recipe.id)
         else
             flash[:notice] = "Inputs can't be blank"
             redirect_back(fallback_location: root_path)
-        end    
+        end 
     end
 
     def daily
@@ -74,7 +75,37 @@ class RecipesController < ApplicationController
 
     def discover
         $CU = current_user.id
+        @filters=[]
         @recipes = Recipe.all().to_a.reverse
+    end
+
+    def updatediscover
+        @user = User.find(current_user.id)
+        @recipes = Recipe.all()
+        @filters = []
+        if params.require(:recipe).permit(:course)[:course]!=""
+            @recipes = @recipes.where(course: params.require(:recipe).permit(:course)[:course])
+            @filters.push("Course: " + params.require(:recipe).permit(:course)[:course])
+        end
+        if params.require(:recipe).permit(:category)[:category]!=""
+            @recipes = @recipes.where(category: params.require(:recipe).permit(:category)[:category])
+            @filters.push("Category: "+ params.require(:recipe).permit(:category)[:category])
+        end
+        if params.require(:recipe).permit(:intolerance)[:intolerance]!=""
+            @recipes = @recipes.where(intolerance: params.require(:recipe).permit(:intolerance)[:intolerance])
+            @filters.push("Intolerance: " + params.require(:recipe).permit(:intolerance)[:intolerance])
+        end
+        if params.require(:recipe).permit(:price)[:price]!=""
+            @recipes = @recipes.where(price: params.require(:recipe).permit(:price)[:price])
+            @filters.push("Price: " + params.require(:recipe).permit(:price)[:price])
+        end
+        if params.require(:recipe).permit(:difficulty)[:difficulty]!=""
+            @recipes = @recipes.where(difficulty: params.require(:recipe).permit(:difficulty)[:difficulty])
+            @filters.push("Difficulty: " + params.require(:recipe).permit(:difficulty)[:difficulty])
+        end
+        @recipes = @recipes.to_a.reverse
+
+        render 'discover.html.erb'
     end
 
     def like
