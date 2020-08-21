@@ -183,4 +183,27 @@ class RecipesController < ApplicationController
     def top
         @recipes = Recipe.all().to_a.sort_by{|e| -e[:n_likes]}.first(5)
     end
+
+    def homepage
+        following=[]
+        @recipes=[]
+        all_recipes = Recipe.all().to_a
+        f = Follow.where(follower_id: current_user.id)
+        f.each do |ff|
+            following.push(ff.following_id)
+        end
+        following.each do |fff|
+            all_recipes.each do |r|
+                if fff==r.user_id
+                    @recipes.push(r)
+                end
+            end
+        end
+        
+        @recipes=@recipes.reverse
+
+        #@recipes = Recipe.joins(:follow).where(['recipes.user_id = follows.following_id'])
+        #@recipes=Recipe.joins(:follow).where(follows: { following_id: admin })
+
+    end
 end
