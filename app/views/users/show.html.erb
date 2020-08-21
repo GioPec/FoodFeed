@@ -3,8 +3,8 @@
     Email: <%= @user.email %><br>
     Nome: <%= @user.first_name %><br>
     Cognome: <%= @user.last_name %><br>
-    Followers: <%= @user.n_follower %><br>
-    Following: <%= @user.n_following %><br>
+    <a href="/users/<%= @user.id %>/follower">Followers: <%= @user.n_follower %></a><br>
+    <a href= "/users/<%= @user.id %>/following"> Following: <%= @user.n_following %></a><br>
     <% if @user.profile_img.attached? %>
         <img src="<%= url_for(@user.profile_img) %>" height='50px'>
     <% else %>

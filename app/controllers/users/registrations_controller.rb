@@ -44,6 +44,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         u.save
       end
     end
+    fol.destroy_all
     fol = Follow.where(:following_id => current_user.id).to_a
     fol.each do |f|
       us=User.where(:id => f.follower_id)
@@ -52,6 +53,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         u.save
       end
     end
+    fol.destroy_all
     super
   end
 
