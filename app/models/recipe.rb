@@ -11,4 +11,5 @@ class Recipe < ActiveRecord::Base
     has_many :favourites
 
     has_one_attached :image
+
 end

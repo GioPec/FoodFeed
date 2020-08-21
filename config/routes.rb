@@ -46,4 +46,6 @@ Rails.application.routes.draw do
   get '/users/:user_id/follower' => 'users#follower', as: 'follower'
   get '/users/:user_id/following' => 'users#following', as: 'following'
 
+  get '/homepage' => 'recipes#homepage', as: 'homepage'
+
 end
