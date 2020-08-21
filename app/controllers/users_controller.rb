@@ -123,4 +123,21 @@ class UsersController < ApplicationController
             redirect_back(fallback_location: root_path)
         end
     end
+
+    def follower
+        @followers=[]
+        f = Follow.where(following_id: params[:user_id])
+        f.each do |ff|
+            @followers.push(ff.follower_id)
+        end
+    end
+
+    def following
+        @following=[]
+        f = Follow.where(follower_id: params[:user_id])
+        f.each do |ff|
+            @following.push(ff.following_id)
+        end
+    
+    end
 end

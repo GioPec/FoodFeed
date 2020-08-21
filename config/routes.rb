@@ -43,4 +43,7 @@ Rails.application.routes.draw do
   get '/users/:user_id/follow/:follower_id' => 'users#follow', as: 'follow'
   delete '/users/:user_id/unfollow/:follower_id' => 'users#unfollow', as: 'unfollow'
 
+  get '/users/:user_id/follower' => 'users#follower', as: 'follower'
+  get '/users/:user_id/following' => 'users#following', as: 'following'
+
 end
