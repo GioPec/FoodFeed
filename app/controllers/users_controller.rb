@@ -98,9 +98,10 @@ class UsersController < ApplicationController
             follower.save
             f.n_follower = f.n_follower+1
             f.save
+            #notification
+            Notification.create!(sender_id: current_user.id, user_id: f.id, notification_type: "follow")
             redirect_to user_path(id_following)
         end
-		
     end
     
     def unfollow

@@ -9,6 +9,7 @@ class Recipe < ActiveRecord::Base
     has_many :likes
     has_many :comments
     has_many :favourites
+    has_many :notifications
 
     has_one_attached :image
 
