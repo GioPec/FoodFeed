@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   #devise_for :users, controllers: { registrations: 'users/registrations' }
 
-  root :to  => redirect('/discover')
+  root :to  => redirect('/homepage')
 
   resources :users do
     resources :recipes
