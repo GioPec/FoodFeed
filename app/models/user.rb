@@ -24,6 +24,7 @@ class User < ApplicationRecord
     has_many :comments
     has_many :favourites
     has_many :follows
+    has_many :notifications
 
     has_one_attached :profile_img
 
