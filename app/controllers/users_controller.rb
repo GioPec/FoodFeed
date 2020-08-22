@@ -141,4 +141,23 @@ class UsersController < ApplicationController
         end
     
     end
+
+    def remove_notification
+        id_notification = params[:id]
+        puts "***************"
+        puts id_notification
+        n = Notification.find(id_notification)
+        n.read=true;
+        n.save;
+        if n.notification_type!="follow"
+            redirect_to user_recipe_path(n.user_id, n.recipe_id)
+        else
+            redirect_to user_path(n.user_id)
+        end
+    end
+
+    def notifications
+        user_id = params[:id]
+        @all_n = Notification.where(user_id: user_id).reverse
+    end
 end

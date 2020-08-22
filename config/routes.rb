@@ -48,4 +48,7 @@ Rails.application.routes.draw do
 
   get '/homepage' => 'recipes#homepage', as: 'homepage'
 
+  get '/notification/:id' => 'users#remove_notification', as: 'remove_notification'
+  get '/users/:id/notifications' => 'users#notifications', as: 'notifications'
+
 end
