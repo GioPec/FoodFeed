@@ -118,7 +118,7 @@ class RecipesController < ApplicationController
             r.n_likes = r.n_likes+1
             r.save
             #notification
-            Notification.create!(sender_id: current_user.id, recipe_id: id_recipe, user_id: r.user_id, notification_type: "like")
+            Notification.create!(sender_id: current_user.id, recipe_id: id_recipe, user_id: r.user_id, notification_type: "like", read: false)
         end
 		redirect_to user_recipe_path(r.user_id, id_recipe)
     end
@@ -145,7 +145,7 @@ class RecipesController < ApplicationController
         r.n_comments = r.n_comments+1
         r.save
         #notification
-        Notification.create!(sender_id: current_user.id, recipe_id: r.id, user_id: r.user_id, notification_type: "comment")
+        Notification.create!(sender_id: current_user.id, recipe_id: r.id, user_id: r.user_id, notification_type: "comment", read: false)
     end
 
     def remove_comment  
