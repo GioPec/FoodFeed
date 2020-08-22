@@ -13,7 +13,11 @@
     function showNotifications() {
       var popup2 = document.getElementById("myPopup2");
       popup2.classList.toggle("show");
-    }
+    };
+    function readNotification(n) {
+      <% id=1 %>
+      <% Notification.find(id).read=true; %>
+    };
   </script>
   </head>
 
@@ -36,16 +40,31 @@
         <br>
         <br>
         <br>
-        <div class="popup" onclick="showNotifications()"><%= Notification.where(user_id: current_user.id).length %> notifications unread
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="popup" onclick="showNotifications()"><%= Notification.where(user_id: current_user.id, read: false).length %> notifications unread
               <span class="popuptext" id="myPopup2">
-                <% Notification.where(user_id: current_user.id).each do |n| %>
-                  <% sender=User.find(n.sender_id)%>
-                  <% if n.notification_type=="like" %>
-                    <a href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> liked your recipe</a><br>
-                  <% elsif n.notification_type=="comment" %> 
-                    <a href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> commented your recipe</a><br>
-                  <% else %> 
-                    <a href="/users/<%= n.sender_id %>"><%= sender.username %> started following you</a><br>
+                <% Notification.where(user_id: current_user.id).last(5).each do |n| %>
+                  <% if n.read==false %>
+                    <% sender=User.find(n.sender_id)%>
+                    <% if n.notification_type=="like" %>
+                      <%= link_to "Someone liked your recipe", user_recipe_path(n.user_id, n.recipe_id), :onclick => n.read=true; n.save; %><br>
+                    <% elsif n.notification_type=="comment" %>
+                      <%= link_to "Someone commented your recipe", user_recipe_path(n.user_id, n.recipe_id), :onclick => n.read=true; n.save; %><br>
+                    <% else %> 
+                      <%= link_to "Someone followed you", user_path(n.user_id), :onclick => n.read=true; n.save; %><br>
+                    <% end %>
+                  <% else %>
+                    <% sender=User.find(n.sender_id)%>
+                    <% if n.notification_type=="like" %>
+                      <div style="background-color: #D3D3D3"><a href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> liked your recipe</a></div>
+                    <% elsif n.notification_type=="comment" %> 
+                      <div style="background-color: #D3D3D3"><a href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> commented your recipe</a></div>
+                    <% else %> 
+                      <div style="background-color: #D3D3D3"><a href="/users/<%= n.sender_id %>"><%= sender.username %> started following you</a></div>
+                    <% end %>
                   <% end %>
                 <% end %>
               </span>
