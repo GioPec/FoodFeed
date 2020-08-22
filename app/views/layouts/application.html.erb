@@ -31,30 +31,30 @@
           <%= text_field_tag :search, params[:search] %>
           <%= submit_tag "Search", :name => nil %>
       <% end %>
-
+      <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="popup" onclick="showNotifications()"><%= Notification.where(user_id: current_user.id).length %> notifications unread
+              <span class="popuptext" id="myPopup2">
+                <% Notification.where(user_id: current_user.id).each do |n| %>
+                  <% sender=User.find(n.sender_id)%>
+                  <% if n.notification_type=="like" %>
+                    <a href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> liked your recipe</a><br>
+                  <% elsif n.notification_type=="comment" %> 
+                    <a href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> commented your recipe</a><br>
+                  <% else %> 
+                    <a href="/users/<%= n.sender_id %>"><%= sender.username %> started following you</a><br>
+                  <% end %>
+                <% end %>
+              </span>
+          </div>
     <% end %>
     <% flash.each do |key, value| %>
       <div class="alert alert-<%= key %>"><%= value %></div>
     <% end %>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <div class="popup" onclick="showNotifications()"><%= Notification.where(user_id: current_user.id).length %> notifications unread
-        <span class="popuptext" id="myPopup2">
-          <% Notification.where(user_id: current_user.id).each do |n| %>
-            <% sender=User.find(n.sender_id)%>
-            <% if n.notification_type=="like" %>
-              <a href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> liked your recipe</a><br>
-            <% elsif n.notification_type=="comment" %> 
-              <a href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> commented your recipe</a><br>
-            <% else %> 
-              <a href="/users/<%= n.sender_id %>"><%= sender.username %> started following you</a><br>
-            <% end %>
-          <% end %>
-        </span>
-      </div>
+  
 
     <%= yield %>
   
