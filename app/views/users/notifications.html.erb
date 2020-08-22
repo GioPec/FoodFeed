@@ -1,0 +1,34 @@
+<center>
+    <h1>Notifications</h1><hr>
+
+        <% if @all_n.to_a.length==0 %>
+            <p>Nobody likes you :(</p>
+        <% end %>
+
+        <% @all_n.each do |n| %>
+            <% sender=User.find(n.sender_id)%>
+            <% if n.notification_type=="like" %>
+                <%= link_to sender.username+" liked your recipe", remove_notification_path(n.id) %><br>
+            <% elsif n.notification_type==" comment" %>
+                <%= link_to sender.username+" commented your recipe",  remove_notification_path(n.id) %><br>
+            <% else %> 
+                <%= link_to sender.username+" followed you", remove_notification_path(n.id) %><br>
+            <% end %>
+            <!-- datetime -->
+            <% difference = (DateTime.now.utc - n.created_at).to_i %>
+                <% if difference < 60 %>
+                <%= difference.to_s + "s"%>
+                <% elsif difference < 60*60 %>
+                <%= (difference/60).to_s + "m"%>
+                <% elsif difference < 60*60*24 %>
+                <%= (difference/(60*60)).to_s + "h" %>
+                <% elsif difference < 60*60*24*7 %>
+                <%= (difference/(60*60*24)).to_s + "g" %>
+                <% elsif difference < 60*60*24*7*52 %>
+                <%= (difference/(60*60*24*7)).to_s + "w" %>
+                <% else %>
+                <%= (difference/(60*60*24*7*52)).to_s + "y" %>
+            <% end %><br>
+            <hr>
+        <% end %>
+</center>
