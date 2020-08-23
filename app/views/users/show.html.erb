@@ -1,34 +1,45 @@
-<div>
-    <h2>Profilo di <%= @user.username %> (#<%= @user.id %>)</h2>
-    Email: <%= @user.email %><br>
-    Nome: <%= @user.first_name %><br>
-    Cognome: <%= @user.last_name %><br>
-    <a href="/users/<%= @user.id %>/follower">Followers: <%= @user.n_follower %></a><br>
-    <a href= "/users/<%= @user.id %>/following"> Following: <%= @user.n_following %></a><br>
-    <% if @user.profile_img.attached? %>
-        <img src="<%= url_for(@user.profile_img) %>" height='50px'>
-    <% else %>
-        <img src="<%= @user.img %>" height='50px'>
-    <% end %>
+<div class="container"><br><br>
+    <div class="row">
+        <div class="col-lg text-right">
+            <% if @user.profile_img.attached? %>
+                <img src="<%= url_for(@user.profile_img) %>" height='200px'>
+            <% else %>
+                <img src="<%= @user.img %>" height='200px'>
+            <% end %>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-lg text-left">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h2 class="bree"><%= @user.username %> (#<%= @user.id %>)</h2>
+                </div>
+                <div class="col">
+                    <% if current_user.id==@user.id %>
+                    <% elsif Follow.exists?(follower_id: current_user.id, following_id: @user.id) %>
+                        <%= button_to "Unfollow", unfollow_path(@user.id, current_user.id), :method => :delete, :class => "btn btn-danger bree" %>
+                    <% else %>
+                        <%= button_to "Follow", follow_path(@user.id, current_user.id), :method => :get, :class => "btn btn-orange bree" %>
+                    <% end %>
+                </div>
+            </div>
+            <a href="/users/<%= @user.id %>/follower">Followers: <%= @user.n_follower %></a> &nbsp&nbsp&nbsp&nbsp
+            <a href= "/users/<%= @user.id %>/following"> Following: <%= @user.n_following %></a><br><br>
+            <b><%= @user.first_name %> <%= @user.last_name %></b><br><br>
+            <%= @user.bio %>
+        </div>
+    </div>
 
-    <% if current_user.id==@user.id %>
-    <% elsif Follow.exists?(follower_id: current_user.id, following_id: @user.id) %>
-        <%= button_to "Unfollow", unfollow_path(@user.id, current_user.id), :method => :delete %>
-    <% else %>
-        <%= button_to "Follow", follow_path(@user.id, current_user.id), :method => :get %>
-    <% end %>
     <hr>
-<div>
-    <h2><%= @n_recipe %> ricette:</h2>
-    <% @user.recipes.each do |r| %>
-        <%= r.title %><br>
-        <%= r.preparazione %><br>
-        <img src="<%= url_for(r.image) %>" height="50px"><br>
-        <%= link_to "Recipe details", user_recipe_path(current_user.id, r.id) %><br>
-        <hr>
-    <% end %>
-</div>
-
+    <div class="container">
+        <h2><%= @n_recipe %> ricette:</h2>
+        <% @user.recipes.each do |r| %>
+            <%= r.title %><br>
+            <%= r.preparazione %><br>
+            <img src="<%= url_for(r.image) %>" height="50px"><br>
+            <%= link_to "Recipe details", user_recipe_path(current_user.id, r.id) %><br>
+            <hr>
+        <% end %>
+    </div>
 </div>
 
 <% if current_user.id == @user.id %>
@@ -39,7 +50,7 @@
 
     <%= link_to "Delete your profile", user_registration_path, data: { confirm: "Are you sure?" }, :method => :delete %><br><br>
 
-    <%= link_to 'Favourites', favourites_path(current_user.id) %>
+    <%= link_to 'Favourites', favourites_path(current_user.id) %><br>
 
     <%= link_to "Add new recipe", new_user_recipe_path(current_user.id) %>
 
