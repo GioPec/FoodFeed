@@ -107,7 +107,10 @@
   }
 
   .iconahome {  
-    padding-right: 15px; 
+    padding-right: 15px;
+  } 
+  .iconahome:hover {  
+    opacity: 80% 
   }
 
   .giu {  
@@ -119,7 +122,58 @@
     margin-bottom: 15px; 
   }
 
+  .input-group-text {
+    background-color: white
+  }
+
   .btn-orange {
     background-color: #ff8a65;
-    color: white
+    color: white;
+    font-family: "bree serif";
+  }
+  .btn-danger {
+    color: white;
+    font-family: "bree serif";
+  }
+
+  .square { 
+    object-fit: cover;
+    width: 250px;
+    height: 250px;
+  }
+  
+  .square:hover { 
+    //opacity: 70%;
+  }
+
+  .centered {
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 250px;
+    height: 250px;
+    padding: 125px 0px;
+    color: black;
+    font-size: larger;
+  }
+
+  .thumbnail {
+    position: relative;
+    text-align: center;
+    color: white;
+  }
+  
+  .thumbnail:hover {
+    position: relative;
+    text-align: center;
+    color: white;
+    opacity: 60%;
+  }
+  .thumbnail_data {
+    opacity: 0%
+  }
+  .thumbnail_data:hover {
+    opacity: 100%
   }
