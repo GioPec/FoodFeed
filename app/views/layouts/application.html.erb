@@ -4,7 +4,7 @@
     <title>Foodproject</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
@@ -18,45 +18,89 @@
   </head>
 
   <body>
-    <% if user_signed_in? %>
-      Logged in as <%= current_user.email%> [<%= link_to "Profile", user_path(current_user.id) %> 
-        - <%= link_to 'Logout', destroy_user_session_path, :method => :delete %>] - <%= link_to 'Daily recipe', dailyrecipe_path %>
-         - <%= link_to 'Discover', discover_path %> <% if current_user.role!="U" %> - <%= link_to 'Users', users_path %> <% end %>
-          -  <%= link_to 'Contact', contact_path %> - <%= link_to 'Favourites', favourites_path(current_user.id) %>
-            -  <%= link_to 'Top', top_path %> - <%= link_to 'Homepage', homepage_path %> - 
 
-      <div class="popup" onclick="showNotifications()">🔔 <%= Notification.where(user_id: current_user.id, read: false).length %> notifications unread
-        <span class="popuptext" id="myPopup2">
-          <% Notification.where(user_id: current_user.id).last(5).each do |n| %>
-            <% if n.read==false %>
-              <% sender=User.find(n.sender_id)%>
-              <% if n.notification_type=="like" %>
-                <%= link_to sender.username+" liked your recipe", remove_notification_path(n.id) %><br>
-              <% elsif n.notification_type==" comment" %>
-                <%= link_to sender.username+" commented your recipe",  remove_notification_path(n.id) %><br>
-              <% else %> 
-                <%= link_to sender.username+" followed you", remove_notification_path(n.id) %><br>
-              <% end %>
-            <% else %>
-              <% sender=User.find(n.sender_id)%>
-              <% if n.notification_type=="like" %>
-                <div style="background-color: #D3D3D3"><a href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> liked your recipe</a></div>
-              <% elsif n.notification_type=="comment" %> 
-                <div style="background-color: #D3D3D3"><a href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> commented your recipe</a></div>
-              <% else %> 
-                <div style="background-color: #D3D3D3"><a href="/users/<%= n.sender_id %>"><%= sender.username %> started following you</a></div>
-              <% end %>
+  <% if user_signed_in? %>
+
+    <nav name="top" class="navbar navbar-expand-md fixed-top navtop">
+        <!--crea il bottone del menu a tendina quando rimpicciolisco la pagina web-->
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#barra_navigazione">
+            <span class="navbar-toggler-icon"></span>
+      </button>
+                                            
+      <div class="collapse navbar-collapse" id="barra_navigazione"><!--id deve essere uguale a data-target-->
+        <ul class="navbar-nav rosso">
+            <li align="left">
+                <img onclick="location.href='/homepage'" class="iconahome" src="/images/logo.jpg" height="60px"/>
+            </li>
+            <li class="nav-item link-pad">
+                <a class="nav-link" href="/discover" style="font-size: larger;">Discover</a>
+            </li>
+            <li class="nav-item link-pad">
+                <a class="nav-link" href="/dailyrecipe" style="font-size: larger;">Daily Recipe</a>
+            </li>
+            <li class="nav-item link-pad">
+                <a class="nav-link" href="/top" style="font-size: larger;">Top Recipes of the week</a>
+            </li>
+            <li class="nav-item link-pad">
+                <a class="nav-link" href="/contact" style="font-size: larger;">Contact</a>
+            </li>
+            <% if current_user.role!="U" %>
+              <li class="nav-item link-pad">
+                <a class="nav-link" href="/users" style="font-size: larger;">Show all Users</a>
+              </li>
             <% end %>
-          <% end %>
-          <%= link_to "Show all notifications", notifications_path(current_user.id) %><br>
-        </span>
+        </ul>
+        <!--destra-->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-link giu">
+              <%= form_tag search_path, :method => 'get' do %>
+                  <%= text_field_tag :search, params[:search], placeholder: 'Search users' %>
+                  <%= submit_tag "🔍", :name => nil %>
+                <% end %>
+              <% end %>
+            </li>
+            <!--notification-->
+            <li class="nav-item giu">
+              <div class="popup nav-link" onclick="showNotifications()">🔔 <%= Notification.where(user_id: current_user.id, read: false).length %>
+                <span class="popuptext" id="myPopup2">
+                  <% Notification.where(user_id: current_user.id).last(5).reverse.each do |n| %>
+                    <% if n.read==false %>
+                      <% sender=User.find(n.sender_id)%>
+                      <% if n.notification_type=="like" %>
+                        <%= link_to sender.username+" liked your recipe", remove_notification_path(n.id), :class => "not_read_notification" %><br>
+                      <% elsif n.notification_type==" comment" %>
+                        <%= link_to sender.username+" commented your recipe",  remove_notification_path(n.id), :class => "not_read_notification" %><br>
+                      <% else %> 
+                        <%= link_to sender.username+" followed you", remove_notification_path(n.id), :class => "not_read_notification" %><br>
+                      <% end %>
+                    <% else %>
+                      <% sender=User.find(n.sender_id)%>
+                      <% if n.notification_type=="like" %>
+                        <a class="read_notification" href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> liked your recipe</a><br>
+                      <% elsif n.notification_type=="comment" %> 
+                        <a class="read_notification" href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> commented your recipe</a><br>
+                      <% else %> 
+                        <a class="read_notification" href="/users/<%= n.sender_id %>"><%= sender.username %> started following you</a><br>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <a style="background-color: #ff8a65; width: 298px;" href="/users/<%= current_user.id %>/notifications">Show all notifications</a>
+                </span>
+              </div>
+              <!--profile-->
+              <li class="nav-item">
+                <a class="nav-link" href="/users/<%= current_user.id %>">
+                  <% if current_user.profile_img.attached? %>
+                      <img src="<%= url_for(current_user.profile_img) %>" height="30px">
+                  <% else %>
+                      <img src="<%= current_user.img %>" height="30px">
+                  <% end %>
+                </a>
+              </li>
+        </ul>
       </div>
+    </nav>
 
-      <%= form_tag search_path, :method => 'get' do %>
-          <%= text_field_tag :search, params[:search] %>
-          <%= submit_tag "Search", :name => nil %>
-      <% end %>
-    <% end %>
     <% flash.each do |key, value| %>
       <div class="alert alert-<%= key %>"><%= value %></div>
     <% end %>
