@@ -24,9 +24,14 @@ class UsersController < ApplicationController
     def disable
         if current_user.has_role? :mod, User.find(params[:id])
             u=User.find(params[:id])
-            u.disabled = true
-            u.save
-            redirect_to users_path
+            if u.has_role? :admin
+                flash[:notice] = "You are not allowed to do this"
+                redirect_to users_path
+            else
+                u.disabled = true
+                u.save
+                redirect_to users_path
+            end
         else
             flash[:notice] = "You are not allowed to do this"
             redirect_to users_path

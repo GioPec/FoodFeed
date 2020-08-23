@@ -47,7 +47,13 @@
                 <% else d=false%>
                 <% end %>
 
+                <% if u.role=="A" %>
+                    <% e=true %>
+                <% else e=false%>
+                <% end %>
+
                 <tr>
+                    <span>
                     <td><%= u.id %></td>
                     <td><%= u.username %></td>
                     <td><%= u.first_name %></td>
@@ -66,10 +72,10 @@
                     <td><%= button_to "show", user_path(u.id), :method => :get %></td>
                     <td><%= button_to "upgrade", upgrade_path(u.id), disabled: (a||b||d), :method => :get %></td>
                     <td><%= button_to "downgrade", downgrade_path(u.id), disabled: (a||b||!d), :method => :get %></td>
-                    <td><%= button_to "disable", disable_account_path(u.id), disabled: (b||c), data: { confirm: "Are you sure?" }, :method => :get %></td>
+                    <td><%= button_to "disable", disable_account_path(u.id), disabled: (b||c||e), data: { confirm: "Are you sure?" }, :method => :get %></td>
                     <td><%= button_to "enable", enable_account_path(u.id), disabled: (b||!c), data: { confirm: "Are you sure?" }, :method => :get %></td>
                 </tr>
-            <% end%>
+            <% end %>
         </tbody>
     </table>
 </div>
