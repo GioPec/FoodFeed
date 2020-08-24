@@ -164,5 +164,9 @@ class UsersController < ApplicationController
     def notifications
         user_id = params[:id]
         @all_n = Notification.where(user_id: user_id).reverse
+        #@all_n.each do |n|
+        #    n.read=true;
+        #    n.save;
+        #end
     end
 end

@@ -35,6 +35,7 @@
     position: relative;
     display: inline-block;
     cursor: pointer;
+    font-size: larger;
   }
   
   /* The actual popup (appears on top) */
@@ -100,10 +101,12 @@
   .read_notification {
     background-color: #ccc5af;
     width: 298px;
+    color: black;
   }
   .not_read_notification {
     background-color: white;
     width: 298px;
+    color: black;
   }
 
   .iconahome {  
@@ -176,4 +179,60 @@
   }
   .thumbnail_data:hover {
     opacity: 100%
+  }
+
+  /* ratings */
+  .rating {
+    width: 250px;
+    height: 30px;
+    padding: 5px 10px;
+    margin: auto;
+    display: block;
+    overflow: hidden;
+    unicode-bidi: bidi-override;
+    direction: rtl;
+  }
+  .rating:not(:checked) > input {
+    display: none;
+  }
+  .dimensione{
+    font-size: larger;
+  }
+  
+  /* like*/
+  #icons:not(:checked) > label {
+    cursor:pointer;
+    float: right;
+    width: 30px;
+    height: 50px;
+    display: block;
+    
+    color: rgba(0, 0, 0, 0.4);
+    //line-height: 23px;
+    text-align: center;
+  }
+  #icons:not(:checked) > label:hover,
+  #icons:not(:checked) > label:hover ~ label {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  #icons > input:checked + label:hover,
+  #icons > input:checked + label:hover ~ label,
+  #icons > input:checked ~ label:hover,
+  #icons > input:checked ~ label:hover ~ label,
+  #icons > label:hover ~ input:checked ~ label {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  #icons > input:checked ~ label {
+    color: rgb(0, 0, 0);
+  }
+
+  //////////////////////////////////////
+  .post {
+    object-fit: cover;
+    max-height: 600px;
+    width: 600px;
+  }
+
+  .right {
+    float: right;
   }
