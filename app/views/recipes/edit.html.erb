@@ -1,78 +1,82 @@
-<h2>Edit recipe</h2>
+<center>
+        <br><h2 class="bree">Edit Recipe</h2><br>
 
-<%= form_tag user_recipe_path(current_user.id, @recipe.id), :method => :put, :multipart => true do %>
-        <label>Title</label>
-        <%= text_field(:recipe, :title) %><br>
-        <label>Preparation</label>
-        <%= text_area(:recipe, :preparazione, rows: 8, cols: 55) %><br>
-        <label>Course</label>
-        <%= select(:recipe, :course,    [['', ''],
-                                        ['Breakfast', 'Breakfast'],
-                                        ['Appetizer', 'Appetizer'], 
-                                        ['Finger Food', 'Finger Food'],
-                                        ['First course', 'First course'],
-                                        ['Soup', 'Soup'],
-                                        ['Pizza', 'Pizza'],
-                                        ['Second course', 'Second course'],
-                                        ['Bread', 'Bread'],
-                                        ['Side course', 'Side course'],
-                                        ['Salad', 'Salad'],
-                                        ['Sauce', 'Sauce'],
-                                        ['Snack', 'Snack'],
-                                        ['Drink', 'Drink'],
-                                        ['Dessert', 'Dessert'],
-                                        ['Fruit', 'Fruit']]) %><br>
-        <label>Diet</label>
-        <%= select(:recipe, :category, [['', ''],
-                                        ['Gluten Free', 'Gluten Free'],
-                                        ['Ketogenic', 'Ketogenic'], 
-                                        ['Vegetarian', 'Vegetarian'],
-                                        ['Lacto-Vegetarian', 'Lacto-Vegetarian'],
-                                        ['Ovo-Vegetarian', 'Ovo-Vegetarian'],
-                                        ['Vegan', 'Vegan'],
-                                        ['Pescetarian', 'Pescetarian'],
-                                        ['Paleo', 'Paleo'],
-                                        ['Primal', 'Primal'],
-                                        ['Whole30', 'Whole30']]) %><br>
-        <label>Intolerances</label>
-        <%= select(:recipe, :intolerance, [['', ''],
-                                        ['Dairy', 'Dairy'],
-                                        ['Egg', 'Egg'], 
-                                        ['Gluten', 'Gluten'],
-                                        ['Grain', 'Grain'],
-                                        ['Peanut', 'Peanut'],
-                                        ['Seafood', 'Seafood'],
-                                        ['Sesame', 'Sesame'],
-                                        ['Shellfish', 'Shellfish'],
-                                        ['Soy', 'Soy'],
-                                        ['Sulfite', 'Sulfite'],
-                                        ['Tree Nut', 'Tree Nut'],
-                                        ['Wheat', 'Wheat']]) %><br>
-        <label>Price</label>
-        <%= select(:recipe, :price, [['1', 1],
-                                        ['2', 2],
-                                        ['3', 3], 
-                                        ['4', 4],
-                                        ['5', 5]]) %><br>
-        <label>Difficulty</label>
-        <%= select(:recipe, :difficulty, [['1', 1],
-                                        ['2', 2],
-                                        ['3', 3], 
-                                        ['4', 4],
-                                        ['5', 5]]) %><br>
-        <label>Time</label>
-        <%= select(:recipe, :time, [['15m', 15],
-                                        ['30m', 30],
-                                        ['45m', 45], 
-                                        ['1h', 60],
-                                        ['1h30m', 90],
-                                        ['2h', 120],
-                                        ['2h30m', 150],
-                                        ['3h', 180],
-                                        ['4h', 240],
-                                        ['5h', 300],
-                                        ['6h', 360],
-                                        ['7h', 420],
-                                        ['More', 1000]]) %><br>
-        <button type="submit">Save changes</button>
-<% end %>
+        <div class="container text-center" style="width: 600px">
+                <%= form_tag user_recipe_path(current_user.id, @recipe.id), :method => :put, :multipart => true do %>
+                        <b><label>Title</label><br>
+                        <%= text_field(:recipe, :title) %><br>
+                        <label>Preparation</label><br>
+                        <%= text_area(:recipe, :preparazione, rows: 8, cols: 55) %><br>
+                        <label>Course</label><br>
+                        <%= select(:recipe, :course,    [['', ''],
+                                                        ['Breakfast', 'Breakfast'],
+                                                        ['Appetizer', 'Appetizer'], 
+                                                        ['Finger Food', 'Finger Food'],
+                                                        ['First course', 'First course'],
+                                                        ['Soup', 'Soup'],
+                                                        ['Pizza', 'Pizza'],
+                                                        ['Second course', 'Second course'],
+                                                        ['Bread', 'Bread'],
+                                                        ['Side course', 'Side course'],
+                                                        ['Salad', 'Salad'],
+                                                        ['Sauce', 'Sauce'],
+                                                        ['Snack', 'Snack'],
+                                                        ['Drink', 'Drink'],
+                                                        ['Dessert', 'Dessert'],
+                                                        ['Fruit', 'Fruit']]) %><br>
+                        <label>Diet</label><br>
+                        <%= select(:recipe, :category, [['', ''],
+                                                        ['Gluten Free', 'Gluten Free'],
+                                                        ['Ketogenic', 'Ketogenic'], 
+                                                        ['Vegetarian', 'Vegetarian'],
+                                                        ['Lacto-Vegetarian', 'Lacto-Vegetarian'],
+                                                        ['Ovo-Vegetarian', 'Ovo-Vegetarian'],
+                                                        ['Vegan', 'Vegan'],
+                                                        ['Pescetarian', 'Pescetarian'],
+                                                        ['Paleo', 'Paleo'],
+                                                        ['Primal', 'Primal'],
+                                                        ['Whole30', 'Whole30']]) %><br>
+                        <label>Intolerances</label><br>
+                        <%= select(:recipe, :intolerance, [['', ''],
+                                                        ['Dairy', 'Dairy'],
+                                                        ['Egg', 'Egg'], 
+                                                        ['Gluten', 'Gluten'],
+                                                        ['Grain', 'Grain'],
+                                                        ['Peanut', 'Peanut'],
+                                                        ['Seafood', 'Seafood'],
+                                                        ['Sesame', 'Sesame'],
+                                                        ['Shellfish', 'Shellfish'],
+                                                        ['Soy', 'Soy'],
+                                                        ['Sulfite', 'Sulfite'],
+                                                        ['Tree Nut', 'Tree Nut'],
+                                                        ['Wheat', 'Wheat']]) %><br>
+                        <label>Price</label><br>
+                        <%= select(:recipe, :price, [['1', 1],
+                                                        ['2', 2],
+                                                        ['3', 3], 
+                                                        ['4', 4],
+                                                        ['5', 5]]) %><br>
+                        <label>Difficulty</label><br>
+                        <%= select(:recipe, :difficulty, [['1', 1],
+                                                        ['2', 2],
+                                                        ['3', 3], 
+                                                        ['4', 4],
+                                                        ['5', 5]]) %><br>
+                        <label>Time</label><br>
+                        <%= select(:recipe, :time, [['15m', 15],
+                                                        ['30m', 30],
+                                                        ['45m', 45], 
+                                                        ['1h', 60],
+                                                        ['1h30m', 90],
+                                                        ['2h', 120],
+                                                        ['2h30m', 150],
+                                                        ['3h', 180],
+                                                        ['4h', 240],
+                                                        ['5h', 300],
+                                                        ['6h', 360],
+                                                        ['7h', 420],
+                                                        ['More', 1000]]) %><br></b>
+                        <br><button class="btn btn-orange" type="submit">Save changes</button>
+                <% end %>
+        </div>
+<center>

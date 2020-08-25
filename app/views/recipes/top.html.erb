@@ -29,7 +29,7 @@
                     <% else %>
                         <img src="<%= u.img %>" height="40px">
                     <% end %>
-                    <a class="bree" href=<%= url %>><%= u.username %></a>
+                    <a class="bree no_decoration" href=<%= url %>><%= u.username %></a>
                 </span></h2>
                 
                 <% difference = (DateTime.now.utc - r.created_at).to_i %>
@@ -54,7 +54,11 @@
 
                 <h2 style="float: left" class="bree"><%= r.title %></h2>
                 
-                <h4 class="text-right"><%= r.n_likes %>🤍 <%= r.n_comments %>💬</h4><br>
+                <% if Like.exists?(user_id: current_user.id, recipe_id: r.id) %>
+                    <h4 class="text-right"><%= r.n_likes %>❤️ <%= r.n_comments %>💬</h4><br>
+                <% else %>
+                  <h4 class="text-right"><%= r.n_likes %>🤍 <%= r.n_comments %>💬</h4><br>
+                <% end %>
             </div>
         </div><br><br>
 

@@ -1,29 +1,49 @@
 <center>
-    <% if current_user.id.to_s == params[:user_id] %>
-        <%= link_to "Edit post", edit_user_recipe_path(current_user.id, @recipe.id) %> - 
-    <% end %>
-    <% if current_user.has_role? :mod, @recipe %>
-    <%= link_to "Remove post", user_recipe_path(current_user.id, @recipe.id), data: { confirm: "Are you sure?" }, :method => :delete %><br>
-    <% end %>
-
-    <!-- title -->
-    <h1><%= @recipe.title %></h1>
-    <!-- img -->
-    <img src="<%= url_for(@recipe.image) %>" height="600px"><br>
-    <!--course-->
+    <div class="container"><br><br>
+        <div class="row">
+            <div class="col-lg">
+            </div>
+            <div class="col-lg-14">
+                 <h1><span><h1 class="bree"><%= @recipe.title %></h1></span></h1><br>
+                 <!-- img -->
+                 <img src="<%= url_for(@recipe.image) %>" height="600px" style="max-width: 1000px"><br>
+            </div>
+            <div class="col-lg text-right">
+                <% if current_user.id.to_s == params[:user_id] %>
+                    <%= button_to "Edit post", edit_user_recipe_path(current_user.id, @recipe.id), :method => :get, :class => "btn btn-orange" %>
+                    <p></p>
+                <% end %>
+                <% if current_user.has_role? :mod, @recipe %>
+                    <%= button_to "Remove post", user_recipe_path(current_user.id, @recipe.id), data: { confirm: "Are you sure?" }, :method => :delete, :class => "btn btn-danger" %><br>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    
+    <!--data-->
+    <h4><br>
     <% if @recipe.course!="" %>
-        Course: <%= @recipe.course %><br>
+        <b>Course: </b><%= @recipe.course %> | 
     <% end %>
     <% if @recipe.category!="" %>
-        Category: <%= @recipe.category %><br>
+        <b>Category: </b><%= @recipe.category %> | 
     <% end %>
     <% if @recipe.intolerance!="" %>
-        Intolerance: <%= @recipe.intolerance %><br>
+        <b>Intolerance: </b><%= @recipe.intolerance %> | 
     <% end %>
-    Price: <%= @recipe.price %><br>
-    Difficulty: <%= @recipe.difficulty %><br>
-    Time: <%= @recipe.time %> minutes<br><br>
+    <% p=0 %>
+    <b>Price: </b><%= while p < @recipe.price do %>&#128178; <% p=p+1 %><% end %> | 
+    <% d=0 %>
+    <b>Difficulty: </b><%= while d < @recipe.difficulty do %>👨‍🍳 <% d=d+1 %><% end %> | 
+    <b>Time: </b><%= @recipe.time %> minutes <br></h4>
 
+    <br>
+    <!-- preparazione -->
+    <div class="container"><h5><%= @recipe.preparazione %></h5></div>
+    <p> </p>
     <!-- datetime -->
     <% difference = (DateTime.now.utc - @recipe.created_at).to_i %>
         <% if difference < 60 %>
@@ -39,43 +59,54 @@
         <% else %>
         <%= (difference/(60*60*24*7*52)).to_s + "y" %>
     <% end %><br>
-    <!-- likes -->
-    <span>
-        <div class="popup" onclick="showLikes()"><%= @recipe.n_likes %> likes
-            <span class="popuptext" id="myPopup">
-                <% Like.all.each do |l| %>
-                    <% if l.recipe_id.to_s == params[:id]%>
-                        <% if User.find(l.user_id).profile_img.attached? %>
-                            <img src="<%= url_for(User.find(l.user_id).profile_img) %>" height="20px">
-                        <% else %>
-                            <img src="<%= User.find(l.user_id).img %>" height="20px">
-                        <% end %>
-                        <a href="/users/<%= l.user_id %>"><%= User.find(l.user_id).username %></a>
-                    <% end %>
-                    <br>
+    <div class="container"><br><br>
+        <div class="row">
+            <div class="col-sm text-right">
+            
+                
+            </div>
+            <div class="col-sm-3">
+                <!-- likes buttons -->
+                <% if Like.exists?(user_id: current_user.id, recipe_id: @recipe.id) %>
+                    <span style="display:inline; font-size:x-large"><%= link_to "❤️", remove_like_path(current_user.id, @recipe.id), :method => :delete, :class => "no_decoration" %></span>
+                <% else %>
+                    <span style="display:inline: font-size:x-large"><%= link_to "🤍", like_path(current_user.id, @recipe.id), :method => :get, :class => "no_decoration" %></span>
                 <% end %>
-            </span>
+                
+                <span style="display:inline; font-size:x-large" class="popup" onclick="showLikes()"><b><%= @recipe.n_likes %> likes</b>
+                    <span class="popuptext" id="myPopup">
+                        <% Like.all.each do |l| %>
+                            <% if l.recipe_id.to_s == params[:id]%>
+                                <% if User.find(l.user_id).profile_img.attached? %>
+                                    <img src="<%= url_for(User.find(l.user_id).profile_img) %>" height="20px">
+                                <% else %>
+                                    <img src="<%= User.find(l.user_id).img %>" height="20px">
+                                <% end %>
+                                <a href="/users/<%= l.user_id %>"><%= User.find(l.user_id).username %></a>
+                            <% end %>
+                            <br>
+                        <% end %>
+                    </span>
+                </span>      
+                     
+            </div>
+            <div class="col-sm text-right">
+                <!-- favourite -->
+                
+                    <% if Favourite.exists?(user_id: current_user.id, recipe_id: @recipe.id) %>
+                        <b><span style="font-size:x-large"><%= link_to "⭐ Remove from favourites", remove_favourite_path(current_user.id, @recipe.id), :method => :delete, :class => "no_decoration" %></span></b>
+                    <% else %>
+                        <b><span style="font-size:x-large"><%= link_to "☆ Add to favourites", favourite_path(current_user.id, @recipe.id), :method => :get, :class => "no_decoration" %></span></b>
+                    <% end %>
+                
+            </div>
         </div>
-        <br><br>
-        <!-- likes buttons -->
-        <% if Like.exists?(user_id: current_user.id, recipe_id: @recipe.id) %>
-            <%= button_to "Remove like", remove_like_path(current_user.id, @recipe.id), :method => :delete %>
-        <% else %>
-            <%= button_to "Like", like_path(current_user.id, @recipe.id), :method => :get %>
-        <% end %>
-        <!-- favourite -->
-        <% if Favourite.exists?(user_id: current_user.id, recipe_id: @recipe.id) %>
-            <%= button_to "Remove from favourites", remove_favourite_path(current_user.id, @recipe.id), :method => :delete %>
-        <% else %>
-            <%= button_to "Favourites", favourite_path(current_user.id, @recipe.id), :method => :get %>
-        <% end %>
-    </span>
-    <!-- preparazione -->
-    <p><%= @recipe.preparazione %></p><br>
-
+    </div>
+    
+    <br><br>
     <hr>
     <!-- comments -->
-    <div><%= @recipe.n_comments %> comments<br>
+    <div><b><%= @recipe.n_comments %> comments</b><br><br>
         <% Comment.all.each do |c| %>
             <% if c.recipe_id.to_s == params[:id]%>
                 <% if User.find(c.user_id).profile_img.attached? %>
@@ -83,7 +114,7 @@
                 <% else %>
                     <img src="<%= User.find(c.user_id).img %>" height="20px">
                 <% end %>
-                <a href="/users/<%= c.user_id %>"><%= User.find(c.user_id).username %></a>
+                <a class="no_decoration bree" href="/users/<%= c.user_id %>"><%= User.find(c.user_id).username %></a>
                 <% difference = (DateTime.now.utc - c.created_at).to_i %>
                     <% if difference < 60 %>
                     <%= difference.to_s + "s"%>
@@ -99,18 +130,16 @@
                     <%= (difference/(60*60*24*7*52)).to_s + "y" %>
                 <% end %>
                 <% if current_user.has_role? :mod, c %>
-                    <%= button_to "X", remove_comment_path(c.user_id, c.recipe_id, c.id), :method => :delete %>
+                    <%= link_to "❌", remove_comment_path(c.user_id, c.recipe_id, c.id), :method => :delete, :class => "no_decoration remove" %>
                 <% end %>
                 <p><%= c.body %></p>
-            <hr><% end %>
-            <br>
+            <hr><br><% end %>
         <% end %>
     </div>
-    <hr>
     <!-- add comment -->
     <%= form_tag create_comment_path(current_user.id, @recipe.id), :method => :post do %>
-        <%= text_field(:comment, :body) %>
-        <button type="submit">Post</button>
+        <%= text_area(:comment, :body, rows: 5, cols: 55, placeholder: "What do you think of this recipe?") %>
+        <br><button class="btn btn-orange" type="submit">Post</button><br><br><br>
     <% end %>
 
 </center>

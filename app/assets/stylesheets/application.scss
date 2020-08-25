@@ -49,7 +49,7 @@
     padding: 15px 0;
     position: absolute;
     z-index: 1;
-    bottom: -1100%;
+    bottom: -1000%;
     left: -350%;
     margin-left: -80px;
   }
@@ -73,6 +73,10 @@
     font-family: "bree serif";
   }
 
+  .nav-item {
+    padding-right: 15px;
+  }
+
   .navtop{
     text-align: center; 
     background-color: #ff8a65; 
@@ -83,7 +87,7 @@
     float: left;
     color: black;
     text-align: center;
-    padding: 18px 22px;
+    padding: 18px;
     text-decoration: none;
     font-size: 17px
   }
@@ -235,4 +239,13 @@
 
   .right {
     float: right;
+  }
+
+  .no_decoration, .no_decoration:hover{
+    text-decoration: none;
+    color: black;
+  }
+
+  .remove {
+    color: red;
   }

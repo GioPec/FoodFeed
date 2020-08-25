@@ -12,11 +12,9 @@ Rails.application.routes.draw do
     resources :recipes
   end
 
-  get '/dailyrecipe' => 'recipes#daily'
+  
 
-  get '/discover' => 'recipes#discover'
-  post '/discover' => 'recipes#updatediscover'
-  get '/discover/filter' => 'recipes#discoverfilter'
+  get '/dailyrecipe' => 'recipes#daily'
 
   get '/users/:user_id/recipes/:recipe_id/like/new' => 'recipes#like', as: 'like'
   delete '/users/:user_id/recipes/:recipe_id/like/delete' => 'recipes#remove_like', as: 'remove_like'
@@ -51,4 +49,8 @@ Rails.application.routes.draw do
   get '/notification/:id' => 'users#remove_notification', as: 'remove_notification'
   get '/users/:id/notifications' => 'users#notifications', as: 'notifications'
 
+  get '/discover' => redirect('/discover/1')
+  get '/discover/:id' => 'recipes#discover'
+  post '/discover' => 'recipes#updatediscover'
+  get '/discover/filter' => 'recipes#discoverfilter'
 end
