@@ -76,10 +76,14 @@ class RecipesController < ApplicationController
     def discover
         $CU = current_user.id
         @filters=[]
-        @recipes = Recipe.all().to_a.reverse
+        page = params[:id].to_i
+        @recipes_per_page = 5
+        @n_pages = ((Recipe.all().length/@recipes_per_page.to_f).ceil)
+        @recipes = Recipe.all().to_a.reverse.drop(@recipes_per_page*(page-1))
     end
 
     def updatediscover
+        @recipes_per_page = 100
         @user = User.find(current_user.id)
         @recipes = Recipe.all()
         @filters = []
@@ -104,6 +108,7 @@ class RecipesController < ApplicationController
             @filters.push("Difficulty: " + params.require(:recipe).permit(:difficulty)[:difficulty])
         end
         @recipes = @recipes.to_a.reverse
+        @n_pages = 0
 
         render 'discover.html.erb'
     end
