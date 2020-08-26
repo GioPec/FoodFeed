@@ -37,8 +37,7 @@ gem 'dotenv-rails'
 gem 'dotenv'
 
 gem 'simple_form'
-gem 'bootstrap'
-gem 'jquery-rails'
+
 
 gem 'rolify'
 
