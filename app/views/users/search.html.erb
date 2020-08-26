@@ -1,12 +1,14 @@
 <center>
-    <br><br>
-    <h1>Result</h1><hr>
+    <br>
+    <h1 class="bree">Result</h1><hr>
 
-    <h2><%= link_to @user.username, user_path(@user.id) %></h2><br>
-    <% if @user.profile_img.attached? %>
-        <img src="<%= url_for(@user.profile_img) %>" height="300px">
-    <% else %>
-        <img src="<%= @user.img %>" height="300px">
-    <% end %>
+    <h2 class="no_decoration bree"><%= link_to @user.username, user_path(@user.id) %></h2><br>
+    <a href="/users/<%= @user.id %>">
+        <% if @user.profile_img.attached? %>
+            <img src="<%= url_for(@user.profile_img) %>" height="300px">
+        <% else %>
+            <img src="<%= @user.img %>" height="300px">
+        <% end %>
+    </a>
 
 </center>

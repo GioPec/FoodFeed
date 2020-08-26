@@ -1,6 +1,9 @@
 <center>
-    <br><h1 class="bree">Notifications</h1><hr>
-
+    <br>
+    
+      <h1 class="bree">Notifications</h1>
+      <div class="container"">
+        <hr>
         <% if @all_n.to_a.length==0 %>
             <p>Nobody likes you :(</p>
         <% end %>
@@ -9,38 +12,39 @@
             
             <% if n.read==false %>
                       <% sender=User.find(n.sender_id)%>
-                      <% if n.notification_type=="like" %>
-                        <%= link_to sender.username+" liked your recipe", remove_notification_path(n.id), :class => "not_read_notification" %><br>
+                      <b><% if n.notification_type=="like" %>
+                        <%= link_to sender.username+" liked your recipe", remove_notification_path(n.id), :class => "no_decoration" %>
                       <% elsif n.notification_type=="comment" %>
-                        <%= link_to sender.username+" commented your recipe",  remove_notification_path(n.id), :class => "not_read_notification" %><br>
+                        <%= link_to sender.username+" commented your recipe",  remove_notification_path(n.id), :class => "no_decoration" %>
                       <% else %> 
-                        <%= link_to sender.username+" followed you", remove_notification_path(n.id), :class => "not_read_notification" %><br>
-                      <% end %>
+                        <%= link_to sender.username+" followed you", remove_notification_path(n.id), :class => "no_decoration" %>
+                      <% end %></b>
                     <% else %>
                       <% sender=User.find(n.sender_id)%>
                       <% if n.notification_type=="like" %>
-                        <a class="read_notification" href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> liked your recipe</a><br>
+                        <a class="read no_decoration" href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> liked your recipe</a>
                       <% elsif n.notification_type=="comment" %> 
-                        <a class="read_notification" href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> commented your recipe</a><br>
+                        <a class="read no_decoration" href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> commented your recipe</a>
                       <% else %> 
-                        <a class="read_notification" href="/users/<%= n.sender_id %>"><%= sender.username %> started following you</a><br>
+                        <a class="read no_decoration" href="/users/<%= n.sender_id %>"><%= sender.username %> started following you</a>
                       <% end %>
                     <% end %>
             <!-- datetime -->
-            <% difference = (DateTime.now.utc - n.created_at).to_i %>
-                <% if difference < 60 %>
-                <p class="text-right"><%= difference.to_s + "s"%></p>
-                <% elsif difference < 60*60 %>
-                <p class="text-right"><%= (difference/60).to_s + "m"%></p>
-                <% elsif difference < 60*60*24 %>
-                <p class="text-right"><%= (difference/(60*60)).to_s + "h" %></p>
-                <% elsif difference < 60*60*24*7 %>
-                <p class="text-right"><%= (difference/(60*60*24)).to_s + "g" %></p>
-                <% elsif difference < 60*60*24*7*52 %>
-                <p class="text-right"><%= (difference/(60*60*24*7)).to_s + "w" %></p>
-                <% else %>
-                <p class="text-right"><%= (difference/(60*60*24*7*52)).to_s + "y" %></p>
-            <% end %><br>
+                  <% difference = (DateTime.now.utc - n.created_at).to_i %>
+                      <% if difference < 60 %>
+                      <span style="float:right"><%= difference.to_s + "s"%></span>
+                      <% elsif difference < 60*60 %>
+                      <span style="float:right"><%= (difference/60).to_s + "m"%></span>
+                      <% elsif difference < 60*60*24 %>
+                      <span style="float:right"><%= (difference/(60*60)).to_s + "h" %></span>
+                      <% elsif difference < 60*60*24*7 %>
+                      <span style="float:right"><%= (difference/(60*60*24)).to_s + "g" %></span>
+                      <% elsif difference < 60*60*24*7*52 %>
+                      <span style="float:right"><%= (difference/(60*60*24*7)).to_s + "w" %></span>
+                      <% else %>
+                      <span style="float:right"><%= (difference/(60*60*24*7*52)).to_s + "y" %></span>
+                  <% end %>
             <hr>
         <% end %>
+      </div><br><br>
 </center>

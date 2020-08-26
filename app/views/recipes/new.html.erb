@@ -5,6 +5,8 @@
                 <%= form_tag user_recipes_path(current_user.id), :method => :post, :multipart => true do %>
                         <b><label>Title</label><br>
                         <%= text_field(:recipe, :title) %><br>
+                        <label>Ingredients</label><br>
+                        <%= text_area(:recipe, :ingredients, rows: 8, cols: 55) %><br>
                         <label>Preparation</label><br>
                         <%= text_area(:recipe, :preparazione, rows: 8, cols: 55) %><br>
                         <label>Image</label><br>

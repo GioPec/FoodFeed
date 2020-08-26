@@ -18,8 +18,8 @@
         <div class="col">
                     <!--buttons-->
                     <% if current_user.id==@user.id %>
-                        <%= button_to 'Favourites', favourites_path(current_user.id), :class => "btn btn-orange" %><br>
-                        <%= button_to "Edit your profile", edit_user_registration_path, :class => "btn btn-orange btn-sm" %><br>
+                        <%= button_to 'Favourites', favourites_path(current_user.id), :class => "btn btn-orange", :method => :get %><br>
+                        <%= button_to "Edit your profile", edit_user_registration_path, :class => "btn btn-orange btn-sm", :method => :get %><br>
                         <%= button_to 'Logout', destroy_user_session_path, :method => :delete, :class => "btn btn-danger btn-sm" %>
                     <% elsif Follow.exists?(follower_id: current_user.id, following_id: @user.id) %>
                         <%= button_to "Unfollow", unfollow_path(@user.id, current_user.id), :method => :delete, :class => "btn btn-danger bree" %>

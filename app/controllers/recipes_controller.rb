@@ -8,6 +8,7 @@ class RecipesController < ApplicationController
         @user = User.find(current_user.id)
         r = Recipe.create(user_id: current_user.id, title: params.require(:recipe).permit(:title)[:title],
             preparazione: params.require(:recipe).permit(:preparazione)[:preparazione],
+            ingredients: params.require(:recipe).permit(:ingredients)[:ingredients],
             image: params.require(:recipe).permit(:image)[:image],
             course: params.require(:recipe).permit(:course)[:course],
             category: params.require(:recipe).permit(:category)[:category],
@@ -53,7 +54,7 @@ class RecipesController < ApplicationController
     def update
         id = params[:id]
         @recipe = Recipe.find(id)
-        if @recipe.update_attributes(params.require(:recipe).permit(:title, :preparazione, :course, :category,
+        if @recipe.update_attributes(params.require(:recipe).permit(:title, :preparazione, :ingredients, :course, :category,
              :intolerance, :price, :difficulty, :time))
             redirect_to user_recipe_path(current_user.id, @recipe.id)
         else
@@ -123,7 +124,9 @@ class RecipesController < ApplicationController
             r.n_likes = r.n_likes+1
             r.save
             #notification
-            Notification.create!(sender_id: current_user.id, recipe_id: id_recipe, user_id: r.user_id, notification_type: "like", read: false)
+            if(current_user.id!=r.user_id)
+                Notification.create!(sender_id: current_user.id, recipe_id: id_recipe, user_id: r.user_id, notification_type: "like", read: false)
+            end
         end
 		redirect_to user_recipe_path(r.user_id, id_recipe)
     end
@@ -150,7 +153,9 @@ class RecipesController < ApplicationController
         r.n_comments = r.n_comments+1
         r.save
         #notification
-        Notification.create!(sender_id: current_user.id, recipe_id: r.id, user_id: r.user_id, notification_type: "comment", read: false)
+        if(current_user.id!=r.user_id)
+            Notification.create!(sender_id: current_user.id, recipe_id: r.id, user_id: r.user_id, notification_type: "comment", read: false)
+        end
     end
 
     def remove_comment  
@@ -196,6 +201,8 @@ class RecipesController < ApplicationController
     def homepage
         following=[]
         @recipes=[]
+        @recipes_per_page = 5
+        page = params[:id].to_i
         all_recipes = Recipe.all().to_a
         f = Follow.where(follower_id: current_user.id)
         f.each do |ff|
@@ -208,8 +215,9 @@ class RecipesController < ApplicationController
                 end
             end
         end
-        
-        @recipes=@recipes.reverse
+
+        @n_pages = ((@recipes.length/@recipes_per_page.to_f).ceil)
+        @recipes = @recipes.to_a.reverse.drop(@recipes_per_page*(page-1))
 
         #@recipes = Recipe.joins(:follow).where(['recipes.user_id = follows.following_id'])
         #@recipes=Recipe.joins(:follow).where(follows: { following_id: admin })

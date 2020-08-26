@@ -44,7 +44,8 @@ Rails.application.routes.draw do
   get '/users/:user_id/follower' => 'users#follower', as: 'follower'
   get '/users/:user_id/following' => 'users#following', as: 'following'
 
-  get '/homepage' => 'recipes#homepage', as: 'homepage'
+  get '/homepage/:id' => 'recipes#homepage', as: 'homepage'
+  get '/homepage' => redirect('/homepage/1')
 
   get '/notification/:id' => 'users#remove_notification', as: 'remove_notification'
   get '/users/:id/notifications' => 'users#notifications', as: 'notifications'
