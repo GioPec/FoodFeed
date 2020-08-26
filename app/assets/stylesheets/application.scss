@@ -249,3 +249,33 @@
   .remove {
     color: red;
   }
+
+  .read {
+    color: grey;
+    //font-style: italic;
+    text-decoration: underline;
+  }
+
+  .footer {
+    float: center;
+    color: white;
+    text-align: center;
+    padding: 18px 22px;
+    text-decoration: none;
+  }
+
+  .alert {
+    position: relative;
+    display: inline-block;
+    width: 300px;
+    background-color: #ffccbd;
+    text-align: center;
+    border-radius: 6px;
+    border: solid black 1px;
+    padding: 15px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 70%;
+    left: 3%;
+    //margin-left: -80px;
+  }

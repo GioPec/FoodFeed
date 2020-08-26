@@ -6,7 +6,7 @@
             <div class="col-lg-14">
                  <h1><span><h1 class="bree"><%= @recipe.title %></h1></span></h1><br>
                  <!-- img -->
-                 <img src="<%= url_for(@recipe.image) %>" height="600px" style="max-width: 1000px"><br>
+                 <img src="<%= url_for(@recipe.image) %>" height="600px" style="max-width: 900px; object-fit: cover;"><br>
             </div>
             <div class="col-lg text-right">
                 <% if current_user.id.to_s == params[:user_id] %>
@@ -41,7 +41,11 @@
     <b>Time: </b><%= @recipe.time %> minutes <br></h4>
 
     <br>
+    <!-- ingredienti -->
+    <h3 class="bree">Ingredients</h3>
+    <div class="container"><h5><%= @recipe.ingredients %></h5></div><br>
     <!-- preparazione -->
+    <h3 class="bree">Preparation</h3>
     <div class="container"><h5><%= @recipe.preparazione %></h5></div>
     <p> </p>
     <!-- datetime -->

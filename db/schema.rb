@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_21_105605) do
+ActiveRecord::Schema.define(version: 2020_08_26_094853) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 2020_08_21_105605) do
     t.integer "price", default: 1
     t.integer "difficulty", default: 1
     t.integer "time", default: 0
+    t.string "ingredients", null: false
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 
