@@ -88,7 +88,7 @@
               </div>
               <!--profile-->
               <li class="nav-item">
-                <a class="nav-link" href="/users/<%= current_user.id %>">
+                <a id="Profile" name="Profile" class="nav-link" href="/users/<%= current_user.id %>">
                   <% if current_user.profile_img.attached? %>
                       <img src="<%= url_for(current_user.profile_img) %>" height="30px">
                   <% else %>

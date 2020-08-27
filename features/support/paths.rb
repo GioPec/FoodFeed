@@ -14,21 +14,21 @@ module NavigationHelpers
     case page_name
     
     when /^the home\s?page$/
-      '/'
+      '/homepage/1'
     when /^My Profile page/
-      '/users/'+$CU.to_s
+      '/users/1'
     
     when /^the Create New Recipe Page/
-      '/users/'+$CU.to_s+'/recipes/new'
+      '/users/1/recipes/new'
 
     when /^the Recipe page/
-      '/users/'+$CU.to_s+'/recipes/1'
+      '/users/1/recipes/1'
 
     when /^the login page/
       '/users/sign_in'
 
     when /^the Discover Page/
-      '/discover'
+      '/discover/1'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
