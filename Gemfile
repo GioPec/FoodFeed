@@ -24,7 +24,10 @@ gem 'jbuilder', '~> 2.7'
 # gem 'image_processing', '~> 1.2'
 
 gem 'haml'
-gem 'wdm'
+
+platforms :mswin do 
+  gem "wdm", :group => [:development]
+end
 
 gem 'devise'
 gem 'omniauth-facebook'
