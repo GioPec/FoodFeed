@@ -6,7 +6,7 @@ Feature: User can login to
 Scenario: Login success
   Given I am a registered user
   When I log in
-  Then I should be on the Discover Page
+  Then I should be on the homepage
 
 Scenario: Login failure
   Given I am a registered user

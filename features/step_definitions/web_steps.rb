@@ -99,7 +99,7 @@ end
 #end
 
 And /^I am on my profile page$/ do
-   visit  user_path(@user.id)
+   visit user_path(@user.id)
 end
 
 #Then /^I should be on the Discover Page$/ do
@@ -107,7 +107,7 @@ end
 #end
 
 And /^I follow my profile page $/ do
-  visit  user_path(@user.id)
+  visit user_path(@user.id)
 end
 
 When /^I log in$/ do
@@ -116,7 +116,7 @@ When /^I log in$/ do
     When I fill in "Email" with "a@a.a"
     And I fill in "Password" with "aaaaaaaa"
     And I press "Log in"
-    Then I should be on the Discover Page
+    Then I should be on the homepage
   }
 end
 
@@ -125,12 +125,13 @@ When /^I add a recipe$/ do
     Given I am a registered user
     When I log in
     And I follow "Profile"
-    And I follow "Add new recipe"
+    And I press "Add new recipe"
     Then I should be on the Create New Recipe Page
     When I fill in "recipe[title]" with "Maccheroni" 
     And I fill in "recipe[preparazione]" with "Pasta e pentole"
+    And I fill in "recipe[ingredients]" with "Pasta e pentole"
     And I attach the file "features/support/test_image.jpg" to "recipe[image]"
-    And I press "Save changes"
+    And I press "Add Recipe"
     Then I should be on My Profile page
     And I should see "Maccheroni"
   }

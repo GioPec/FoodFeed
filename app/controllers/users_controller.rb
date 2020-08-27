@@ -51,23 +51,33 @@ class UsersController < ApplicationController
     end
 
     def upgrade
-        u=User.find(params[:id])
-        u.add_role :mod, Comment
-        u.add_role :mod, User
-        u.add_role :mod, Recipe
-        u.role="M"
-        u.save
-        redirect_back(fallback_location: root_path)
+        if current_user.has_role? :admin, User.find(params[:id])
+            u=User.find(params[:id])
+            u.add_role :mod, Comment
+            u.add_role :mod, User
+            u.add_role :mod, Recipe
+            u.role="M"
+            u.save
+            redirect_back(fallback_location: root_path)
+        else
+            flash[:notice] = "You are not allowed to do this"
+            redirect_to users_path
+        end
     end
 
     def downgrade
-        u=User.find(params[:id])
-        u.remove_role :mod, Comment
-        u.remove_role :mod, User
-        u.remove_role :mod, Recipe
-        u.role="U"
-        u.save
-        redirect_back(fallback_location: root_path)
+        if current_user.has_role? :admin, User.find(params[:id])
+            u=User.find(params[:id])
+            u.remove_role :mod, Comment
+            u.remove_role :mod, User
+            u.remove_role :mod, Recipe
+            u.role="U"
+            u.save
+            redirect_back(fallback_location: root_path)
+        else
+            flash[:notice] = "You are not allowed to do this"
+            redirect_to users_path
+        end
     end
 
     def contact
