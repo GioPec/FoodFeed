@@ -30,7 +30,7 @@
       <div class="collapse navbar-collapse" id="barra_navigazione"><!--id deve essere uguale a data-target-->
         <ul class="navbar-nav rosso">
             <li align="left">
-                <img onclick="location.href='/homepage'" class="iconahome" src="/images/logo.jpg" height="60px"/>
+                <img onclick="location.href='/homepage'" class="iconahome" src="/images/logo.png" height="60px"/>
             </li>
             <li class="nav-item link-pad">
                 <a class="nav-link" href="/discover/1" style="font-size: larger;">Discover</a>
@@ -108,6 +108,7 @@
     <%= yield %>
   
     <% if user_signed_in? %>
+    <br><br>
       <footer style="background-color: #ff8a65; bottom: 0; width: 100%">
         <div class="footer"><b>Foodproject | Giovanni Pecorelli, Jacopo Rossi</b></div>
       </footer>

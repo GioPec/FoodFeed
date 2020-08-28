@@ -51,19 +51,38 @@
                                                         ['Soy', 'Soy'],
                                                         ['Sulfite', 'Sulfite'],
                                                         ['Tree Nut', 'Tree Nut'],
-                                                        ['Wheat', 'Wheat']]) %><br>
-                        <label>Price</label><br>
-                        <%= select(:recipe, :price, [['1', 1],
-                                                        ['2', 2],
-                                                        ['3', 3], 
-                                                        ['4', 4],
-                                                        ['5', 5]]) %><br>
-                        <label>Difficulty</label><br>
-                        <%= select(:recipe, :difficulty, [['1', 1],
-                                                        ['2', 2],
-                                                        ['3', 3], 
-                                                        ['4', 4],
-                                                        ['5', 5]]) %><br>
+                                                        ['Wheat', 'Wheat']]) %><br><br>
+                        <!-- rating -->
+                        <span id="icons" class="rating">
+                        <input type="radio" id="recipe_price_5" name="recipe[price]" value="5" />
+                        <label class="dimensione" for="recipe_price_5" title="Five">&#128178;</label>
+                        <input type="radio" id="recipe_price_4" name="recipe[price]" value="4" />
+                        <label class="dimensione" for="recipe_price_4" title="Four">&#128178;</label>
+                        <input type="radio" id="recipe_price_3" name="recipe[price]" value="3" />
+                        <label class="dimensione" for="recipe_price_3" title="Three">&#128178;</label>
+                        <input type="radio" id="recipe_price_2" name="recipe[price]" value="2" />
+                        <label class="dimensione" for="recipe_price_2" title="Two">&#128178;</label>
+                        <input type="radio" id="recipe_price_1" name="recipe[price]" value="1" />
+                        <label class="dimensione" for="recipe_price_1" title="One">&#128178;</label>
+                        <input type="radio" id="recipe_price_0" name="recipe[price]" value="1" checked />
+                        <label for="recipe_price_0" title="Zero">Price</label>
+                        </span><br>
+
+                        <!-- difficulty -->
+                        <span id="icons" class="rating">
+                        <input type="radio" id="recipe_difficulty_5" name="recipe[difficulty]" value="5" />
+                        <label class="dimensione" for="recipe_difficulty_5" title="Five">👨‍🍳</label>
+                        <input type="radio" id="recipe_difficulty_4" name="recipe[difficulty]" value="4" />
+                        <label class="dimensione" for="recipe_difficulty_4" title="Four">👨‍🍳</label>
+                        <input type="radio" id="recipe_difficulty_3" name="recipe[difficulty]" value="3" />
+                        <label class="dimensione" for="recipe_difficulty_3" title="Three">👨‍🍳</label>
+                        <input type="radio" id="recipe_difficulty_2" name="recipe[difficulty]" value="2" />
+                        <label class="dimensione" for="recipe_difficulty_2" title="Two">👨‍🍳</label>
+                        <input type="radio" id="recipe_difficulty_1" name="recipe[difficulty]" value="1" />
+                        <label class="dimensione" for="recipe_difficulty_1" title="One">👨‍🍳</label>
+                        <input type="radio" id="recipe_difficulty_0" name="recipe[difficulty]" value="1" checked />
+                        <label for="recipe_difficulty_0" title="Zero">Difficulty</label>
+                        </span><br>
                         <label>Time</label><br>
                         <%= select(:recipe, :time, [['15m', 15],
                                                         ['30m', 30],
