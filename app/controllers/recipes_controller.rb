@@ -6,7 +6,7 @@ class RecipesController < ApplicationController
 
     def create      #data pubblicazione
         @user = User.find(current_user.id)
-        r = Recipe.create(user_id: current_user.id, title: params.require(:recipe).permit(:title)[:title],
+        r = Recipe.new(user_id: current_user.id, title: params.require(:recipe).permit(:title)[:title],
             preparazione: params.require(:recipe).permit(:preparazione)[:preparazione],
             ingredients: params.require(:recipe).permit(:ingredients)[:ingredients],
             image: params.require(:recipe).permit(:image)[:image],
@@ -17,8 +17,10 @@ class RecipesController < ApplicationController
             difficulty: params.require(:recipe).permit(:difficulty)[:difficulty],
             time: params.require(:recipe).permit(:time)[:time],
             created_at: DateTime.now, n_likes: 0, n_comments: 0)
+        
 
         if r.valid?
+            r.save!
             current_user.add_role :mod, r
             flash[:notice] = "A recipe from #{@user.username} has been successfully posted!"
             redirect_to new_user_recipe_path(current_user.id)

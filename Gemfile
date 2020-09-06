@@ -39,8 +39,9 @@ gem 'dotenv'
 
 gem 'simple_form'
 
-
 gem 'rolify'
+
+gem 'aws-sdk-s3', require: false
 
 group :test do
   gem 'cucumber-rails', :require => false
@@ -70,7 +71,6 @@ end
 
 group :production do 
   gem 'pg'
-  gem "aws-sdk-s3"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

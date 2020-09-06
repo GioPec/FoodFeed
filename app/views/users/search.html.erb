@@ -4,10 +4,10 @@
 
     <h2 class="no_decoration bree"><%= link_to @user.username, user_path(@user.id) %></h2><br>
     <a href="/users/<%= @user.id %>">
-        <% if @user.profile_img.attached? %>
-            <img src="<%= url_for(@user.profile_img) %>" height="300px">
+        <% if u.profile_img.attached? %>
+            <%= image_tag u.profile_img, :style => "height: 300px" %>
         <% else %>
-            <img src="<%= @user.img %>" height="300px">
+            <%= image_tag u.img, :style => "height: 300px" %>
         <% end %>
     </a>
 

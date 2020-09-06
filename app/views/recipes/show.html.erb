@@ -6,7 +6,7 @@
             <div class="col-lg-14">
                  <h1><span><h1 class="bree"><%= @recipe.title %></h1></span></h1><br>
                  <!-- img -->
-                 <img src="<%= url_for(@recipe.image) %>" height="600px" style="max-width: 900px; object-fit: cover;"><br>
+                 <%= image_tag @recipe.image, :style => "height: 600px; max-width: 900px; object-fit: cover;" %>
             </div>
             <div class="col-lg text-right">
                 <% if current_user.id.to_s == params[:user_id] %>
@@ -82,7 +82,7 @@
                         <% Like.all.each do |l| %>
                             <% if l.recipe_id.to_s == params[:id]%>
                                 <% if User.find(l.user_id).profile_img.attached? %>
-                                    <img src="<%= url_for(User.find(l.user_id).profile_img) %>" height="20px">
+                                    <img src="<%= User.find(l.user_id).profile_img %>" height="20px">
                                 <% else %>
                                     <img src="<%= User.find(l.user_id).img %>" height="20px">
                                 <% end %>
@@ -114,7 +114,7 @@
         <% Comment.all.each do |c| %>
             <% if c.recipe_id.to_s == params[:id]%>
                 <% if User.find(c.user_id).profile_img.attached? %>
-                    <img src="<%= url_for(User.find(c.user_id).profile_img) %>" height="20px">
+                    <img src="<%= User.find(c.user_id).profile_img %>" height="20px">
                 <% else %>
                     <img src="<%= User.find(c.user_id).img %>" height="20px">
                 <% end %>

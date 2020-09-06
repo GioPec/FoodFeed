@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Foodproject</title>
+    <title>FoodFeed</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -90,9 +90,9 @@
               <li class="nav-item">
                 <a id="Profile" name="Profile" class="nav-link" href="/users/<%= current_user.id %>">
                   <% if current_user.profile_img.attached? %>
-                      <img src="<%= url_for(current_user.profile_img) %>" height="30px">
+                      <%= image_tag current_user.profile_img, :style => "height: 30px" %>
                   <% else %>
-                      <img src="<%= current_user.img %>" height="30px">
+                      <%= image_tag current_user.img, :style => "height: 30px" %>
                   <% end %>
                 </a>
               </li>
@@ -110,7 +110,7 @@
     <% if user_signed_in? %>
     <br><br>
       <footer style="background-color: #ff8a65; bottom: 0; width: 100%">
-        <div class="footer"><b>Foodproject | Giovanni Pecorelli, Jacopo Rossi</b></div>
+        <div class="footer"><b>FoodFeed | Giovanni Pecorelli, Jacopo Rossi</b></div>
       </footer>
     <% end %>
 
