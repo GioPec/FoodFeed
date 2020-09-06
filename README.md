@@ -1,4 +1,4 @@
-# foodproject
+# FoodFeed
 Progetto per il Laboratorio di Architetture Software e Sicurezza Informatica
 
 Corso di laurea in Ingegneria Informatica, Sapienza Università di Roma, A.A. 2019/2020
@@ -11,7 +11,7 @@ Corso di laurea in Ingegneria Informatica, Sapienza Università di Roma, A.A. 20
 * Ruby on Rails
 
 ## How to run
-1) ``git clone https://github.com/GioPec/foodproject``
+1) ``git clone https://github.com/GioPec/FoodFeed``
 2) Open the terminal in the project path and run `bundle install`
 3) Run `rails db:migrate` and `rails db:seed`
 4) Start the server with `rails server`
