@@ -21,16 +21,16 @@
                     <% url="/users/" + r.user_id.to_s %>    <!--creo il link-->
                     <h3><span>
                         <% if u.profile_img.attached? %>
-                            <img src="<%= url_for(u.profile_img) %>" height="40px">
+                            <%= image_tag u.profile_img, :style => "height: 40px" %>
                         <% else %>
-                            <img src="<%= u.img %>" height="40px">
+                            <%= image_tag u.img, :style => "height: 40px" %>
                         <% end %>
                         <a class="no_decoration bree" href=<%= url %>><%= u.username %></a>  <!--username cliccabile - titolo-->
                     </span></h3>
                     <!-- img -->
                     <% url_recipe="/users/" + r.user_id.to_s + "/recipes/" + r.id.to_s %>    <!--creo il link-->
                     <a href=<%= url_recipe %>>
-                        <img class="post" src="<%= url_for(r.image) %>">
+                        <img class="post" src="<%= r.image %>">
                     </a><br>
                     <!-- title -->
                     <h3 class="bree"><%= r.title %></h3>
