@@ -1,0 +1,14 @@
+<center>
+    <br>
+    <h1 class="bree">Result</h1><hr>
+
+    <h2 class="no_decoration bree"><%= link_to @user.username, user_path(@user.id) %></h2><br>
+    <a href="/users/<%= @user.id %>">
+        <% if u.profile_img.attached? %>
+            <%= image_tag u.profile_img, :style => "height: 300px" %>
+        <% else %>
+            <%= image_tag u.img, :style => "height: 300px" %>
+        <% end %>
+    </a>
+
+</center>

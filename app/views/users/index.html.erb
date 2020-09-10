@@ -1,0 +1,81 @@
+<% if current_user.has_role? :admin %>
+    <% a=false %>
+<% else a=true %>
+<% end %>
+<div>
+    <br><h2 class="bree" style="text-align: center">Users</h2><br>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>username</th>
+                <th>first_name</th>
+                <th>last_name</th>
+                <th>date_of_birth</th>
+                <th>phone_number</th>
+                <th>gender</th>
+                <th>email</th>
+                <th>bio</th>
+                <th>img</th>
+                <th>role</th>
+                <th>created_at</th>
+                <th>updated_at</th>
+                <th>role</th>
+                <th>disabled</th>
+                <th>show</th>
+                <th>upgrade</th>
+                <th>downgrade</th>
+                <th>disable</th>
+                <th>enable</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @users.each do |u| %>
+
+                <% if u.id==current_user.id %>
+                    <% b=true %>
+                <% else b=false%>
+                <% end %>
+
+                <% if u.disabled==true %>
+                    <% c=true %>
+                <% else c=false%>
+                <% end %>
+
+                <% if u.role=="M" %>
+                    <% d=true %>
+                <% else d=false%>
+                <% end %>
+
+                <% if u.role=="A" %>
+                    <% e=true %>
+                <% else e=false%>
+                <% end %>
+
+                <tr>
+                    <span>
+                    <td><%= u.id %></td>
+                    <td><%= u.username %></td>
+                    <td><%= u.first_name %></td>
+                    <td><%= u.last_name %></td>
+                    <td><%= u.date_of_birth %></td>
+                    <td><%= u.phone_number %></td>
+                    <td><%= u.gender %></td>
+                    <td><%= u.email %></td>
+                    <td><%= u.bio %></td>
+                    <td><%= u.img %></td>
+                    <td><%= u.role %></td>
+                    <td><%= u.created_at %></td>
+                    <td><%= u.updated_at %></td>
+                    <td><%= u.role %></td>
+                    <td><%= u.disabled %></td>
+                    <td><%= button_to "show", user_path(u.id), :method => :get %></td>
+                    <td><%= button_to "upgrade", upgrade_path(u.id), disabled: (a||b||d), :method => :get %></td>
+                    <td><%= button_to "downgrade", downgrade_path(u.id), disabled: (a||b||!d), :method => :get %></td>
+                    <td><%= button_to "disable", disable_account_path(u.id), disabled: (b||c||e), data: { confirm: "Are you sure?" }, :method => :get %></td>
+                    <td><%= button_to "enable", enable_account_path(u.id), disabled: (b||!c), data: { confirm: "Are you sure?" }, :method => :get %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div><br><br>

@@ -1,0 +1,175 @@
+<script>
+        function showFilter() {
+        var x = document.getElementById("filter");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+<center>
+    
+    <div id="filter" style="display: none" class= "bootstrap-select-wrapper"><br>
+        <%= form_tag discover_path, :method => :post, :multipart => true do %>
+                <label>Course</label>
+                <%= select(:recipe, :course,    [['', ''],
+                                                ['Breakfast', 'Breakfast'],
+                                                ['Appetizer', 'Appetizer'], 
+                                                ['Finger Food', 'Finger Food'],
+                                                ['First course', 'First course'],
+                                                ['Soup', 'Soup'],
+                                                ['Pizza', 'Pizza'],
+                                                ['Second course', 'Second course'],
+                                                ['Bread', 'Bread'],
+                                                ['Side course', 'Side course'],
+                                                ['Salad', 'Salad'],
+                                                ['Sauce', 'Sauce'],
+                                                ['Snack', 'Snack'],
+                                                ['Drink', 'Drink'],
+                                                ['Dessert', 'Dessert'],
+                                                ['Fruit', 'Fruit']])  %>
+                <br><label>Diet</label>
+                <%= select(:recipe, :category, [['', ''],
+                                                ['Gluten Free', 'Gluten Free'],
+                                                ['Ketogenic', 'Ketogenic'], 
+                                                ['Vegetarian', 'Vegetarian'],
+                                                ['Lacto-Vegetarian', 'Lacto-Vegetarian'],
+                                                ['Ovo-Vegetarian', 'Ovo-Vegetarian'],
+                                                ['Vegan', 'Vegan'],
+                                                ['Pescetarian', 'Pescetarian'],
+                                                ['Paleo', 'Paleo'],
+                                                ['Primal', 'Primal'],
+                                                ['Whole30', 'Whole30']]) %>
+                <br><label>Intolerances</label>
+                <%= select(:recipe, :intolerance, [['', ''],
+                                                ['Dairy', 'Dairy'],
+                                                ['Egg', 'Egg'], 
+                                                ['Gluten', 'Gluten'],
+                                                ['Grain', 'Grain'],
+                                                ['Peanut', 'Peanut'],
+                                                ['Seafood', 'Seafood'],
+                                                ['Sesame', 'Sesame'],
+                                                ['Shellfish', 'Shellfish'],
+                                                ['Soy', 'Soy'],
+                                                ['Sulfite', 'Sulfite'],
+                                                ['Tree Nut', 'Tree Nut'],
+                                                ['Wheat', 'Wheat']]) %>
+
+                <!-- rating -->
+                <span id="icons" class="rating">
+                    <input type="radio" id="recipe_price_5" name="recipe[price]" value="5" />
+                    <label class="dimensione" for="recipe_price_5" title="Five">&#128178;</label>
+                    <input type="radio" id="recipe_price_4" name="recipe[price]" value="4" />
+                    <label class="dimensione" for="recipe_price_4" title="Four">&#128178;</label>
+                    <input type="radio" id="recipe_price_3" name="recipe[price]" value="3" />
+                    <label class="dimensione" for="recipe_price_3" title="Three">&#128178;</label>
+                    <input type="radio" id="recipe_price_2" name="recipe[price]" value="2" />
+                    <label class="dimensione" for="recipe_price_2" title="Two">&#128178;</label>
+                    <input type="radio" id="recipe_price_1" name="recipe[price]" value="1" />
+                    <label class="dimensione" for="recipe_price_1" title="One">&#128178;</label>
+                    <input type="radio" id="recipe_price_0" name="recipe[price]" value checked />
+                    <label for="recipe_price_0" title="Zero">Price</label>
+                </span>
+
+                <!-- difficulty -->
+                <span id="icons" class="rating">
+                    <input type="radio" id="recipe_difficulty_5" name="recipe[difficulty]" value="5" />
+                    <label class="dimensione" for="recipe_difficulty_5" title="Five">👨‍🍳</label>
+                    <input type="radio" id="recipe_difficulty_4" name="recipe[difficulty]" value="4" />
+                    <label class="dimensione" for="recipe_difficulty_4" title="Four">👨‍🍳</label>
+                    <input type="radio" id="recipe_difficulty_3" name="recipe[difficulty]" value="3" />
+                    <label class="dimensione" for="recipe_difficulty_3" title="Three">👨‍🍳</label>
+                    <input type="radio" id="recipe_difficulty_2" name="recipe[difficulty]" value="2" />
+                    <label class="dimensione" for="recipe_difficulty_2" title="Two">👨‍🍳</label>
+                    <input type="radio" id="recipe_difficulty_1" name="recipe[difficulty]" value="1" />
+                    <label class="dimensione" for="recipe_difficulty_1" title="One">👨‍🍳</label>
+                    <input type="radio" id="recipe_difficulty_0" name="recipe[difficulty]" value checked />
+                    <label for="recipe_difficulty_0" title="Zero">Difficulty</label>
+                </span>
+                
+                <br><button class="btn btn-orange btn-sm" type="submit">Filter</button>
+        <% end %>
+        <hr>
+    </div>
+    <% if @filters.length!=0 %>
+            <br><h5><b>Filtering by: </b><% @filters.each do |f| %>
+                            <%= f %> <br>
+                            <% end %></h5><hr>
+    <% end %>
+
+    <div class="container"><br><br>
+    <div class="row">
+        <div class="col-lg">
+        </div>
+        <div class="col-lg">
+            <h1><span class="bree">Discover</span></h1>
+        </div>
+        <div class="col-lg text-left">
+            <button class="btn btn-orange" style="margin-left: 50px" onclick="showFilter()">Filter by...</button>
+        </div>
+    </div>
+    <br>
+    <br>
+
+    <% if @recipes.length==0 %>
+        No recipe found :(<br><br>
+    <% end %>
+    <% @recipes.first(@recipes_per_page).each do |r| %>
+
+        <div style="border: solid lightgrey 1px; background-color: #fff8e5; border-radius: 5px"><br>
+
+            <div class="container" style="width: 600px">
+                <% u = User.find(r.user_id) %>
+                <% url="/users/" + r.user_id.to_s %>
+                <h2><span style="float:left">
+                    <% if u.profile_img.attached? %>
+                        <%= image_tag u.profile_img, :style => "height: 40px" %>
+                    <% else %>
+                        <%= image_tag u.img, :style => "height: 40px" %>
+                    <% end %>
+                    <a class="bree no_decoration" href=<%= url %>><%= u.username %></a>
+                </span></h2>
+                
+                <% difference = (DateTime.now.utc - r.created_at).to_i %>
+                <% if difference < 60 %>
+                <p class="text-right"><%= difference.to_s + "s" %></p>
+                <% elsif difference < 60*60 %>
+                <p class="text-right"><%= (difference/60).to_s + "m" %></p>
+                <% elsif difference < 60*60*24 %>
+                <p class="text-right"><%= (difference/(60*60)).to_s + "h" %></p>
+                <% elsif difference < 60*60*24*7 %>
+                <p class="text-right"><%= (difference/(60*60*24)).to_s + "g" %></p>
+                <% elsif difference < 60*60*24*7*52 %>
+                <p class="text-right"><%= (difference/(60*60*24*7)).to_s + "w" %></p>
+                <% else %>
+                <p class="text-right"><%= (difference/(60*60*24*7*52)).to_s + "y" %></p>
+                <% end %>
+
+                <% url_recipe="/users/" + r.user_id.to_s + "/recipes/" + r.id.to_s %>
+                <a href=<%= url_recipe %>>
+                    <br><br><%= image_tag r.image, :style => "object-fit: cover; max-height: 600px; width: 600px;" %>
+                </a><br><br>
+
+                <h2 style="float: left" class="bree"><%= r.title %></h2>
+                
+                <% if Like.exists?(user_id: current_user.id, recipe_id: r.id) %>
+                    <h4 class="text-right"><%= r.n_likes %>❤️ <%= r.n_comments %>💬</h4><br>
+                <% else %>
+                  <h4 class="text-right"><%= r.n_likes %>🤍 <%= r.n_comments %>💬</h4><br>
+                <% end %>
+            </div>
+        </div><br><br>
+
+    <% end %>
+    <% i=1 %>
+    <% while i <= @n_pages do %>
+        <% if params[:id].to_i==i%>
+            <a style="color: red" href="/discover/<%= i %>"> <%= i %> </a>&nbsp
+        <% else %>
+            <a href="/discover/<%= i %>"> <%= i %> </a>&nbsp
+        <% end %>
+        <% i=i+1 %>
+    <% end %>
+    <br><br>
+</center>
