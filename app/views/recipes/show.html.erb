@@ -73,26 +73,15 @@
                 <!-- likes buttons -->
                 <% if Like.exists?(user_id: current_user.id, recipe_id: @recipe.id) %>
                     <span style="display:inline; font-size:x-large"><%= link_to "❤️", remove_like_path(current_user.id, @recipe.id), :method => :delete, :class => "no_decoration" %></span>
+                    <span>
+                        <b><button style="font-size:x-large" class="btn btn-xs" data-toggle="modal" data-target="#selezione" type="button"><b><%= @recipe.n_likes %> likes</b></button>  </b>                
+                    </span>
                 <% else %>
                     <span style="display:inline: font-size:x-large"><%= link_to "🤍", like_path(current_user.id, @recipe.id), :method => :get, :class => "no_decoration" %></span>
-                <% end %>
-                
-                <span style="display:inline; font-size:x-large" class="popup" onclick="showLikes()"><b><%= @recipe.n_likes %> likes</b>
-                    <span class="popuptext" id="myPopup">
-                        <% Like.all.each do |l| %>
-                            <% if l.recipe_id.to_s == params[:id]%>
-                                <% if User.find(l.user_id).profile_img.attached? %>
-                                    <img src="<%= url_for(User.find(l.user_id).profile_img) %>" height="20px">
-                                <% else %>
-                                    <img src="<%= User.find(l.user_id).img %>" height="20px">
-                                <% end %>
-                                <a href="/users/<%= l.user_id %>"><%= User.find(l.user_id).username %></a>
-                            <% end %>
-                            <br>
-                        <% end %>
+                    <span>
+                        <b><button style="font-size:x-large" class="btn btn-xs" data-toggle="modal" data-target="#selezione" type="button"><b><%= @recipe.n_likes %> likes</b></button>  </b>       
                     </span>
-                </span>      
-                     
+                <% end %>  
             </div>
             <div class="col-sm text-right">
                 <!-- favourite -->
@@ -148,10 +137,27 @@
 
 </center>
 
-<script>
-//popup
-function showLikes() {
-  var popup2 = document.getElementById("myPopup");
-  popup2.classList.toggle("show");
-}
-</script>
+<div class="modal" id="selezione" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"><p>Likes</p></h3>
+                <button style="color:black" type="button" class="close" data-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                    <% Like.all.each do |l| %>
+                    <p>
+                    <% if l.recipe_id.to_s == params[:id]%>
+                        <% if User.find(l.user_id).profile_img.attached? %>
+                            <img src="<%= url_for(User.find(l.user_id).profile_img) %>" height="20px">
+                        <% else %>
+                            <img src="<%= User.find(l.user_id).img %>" height="20px">
+                        <% end %>
+                        <a href="/users/<%= l.user_id %>"><%= User.find(l.user_id).username %></a>
+                    </p>
+                    <% end %>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>
