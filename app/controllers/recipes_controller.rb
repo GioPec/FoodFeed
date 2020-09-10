@@ -23,7 +23,7 @@ class RecipesController < ApplicationController
             r.save!
             current_user.add_role :mod, r
             flash[:notice] = "A recipe from #{@user.username} has been successfully posted!"
-            redirect_to new_user_recipe_path(current_user.id)
+            redirect_to user_path(current_user.id)
         else
             flash[:notice] = "Inputs can't be blank"
             redirect_to new_user_recipe_path(current_user.id)

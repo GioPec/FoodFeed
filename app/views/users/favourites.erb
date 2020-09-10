@@ -30,7 +30,7 @@
                     <!-- img -->
                     <% url_recipe="/users/" + r.user_id.to_s + "/recipes/" + r.id.to_s %>    <!--creo il link-->
                     <a href=<%= url_recipe %>>
-                        <img class="post" src="<%= r.image %>">
+                        <%= image_tag r.image, :style => "object-fit: cover; max-height: 600px; width: 600px;" %>
                     </a><br>
                     <!-- title -->
                     <h3 class="bree"><%= r.title %></h3>

@@ -148,7 +148,7 @@
 
                 <% url_recipe="/users/" + r.user_id.to_s + "/recipes/" + r.id.to_s %>
                 <a href=<%= url_recipe %>>
-                    <br><br><img class="post" src="<%= r.image %>">
+                    <br><br><%= image_tag r.image, :style => "object-fit: cover; max-height: 600px; width: 600px;" %>
                 </a><br><br>
 
                 <h2 style="float: left" class="bree"><%= r.title %></h2>
