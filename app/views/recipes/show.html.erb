@@ -103,9 +103,9 @@
         <% Comment.all.each do |c| %>
             <% if c.recipe_id.to_s == params[:id]%>
                 <% if User.find(c.user_id).profile_img.attached? %>
-                    <%= image_tag User.find(c.user_id).profile_img, :style => "height: 20px">
+                    <%= image_tag User.find(c.user_id).profile_img, :style => "height: 20px" %>
                 <% else %>
-                    <%= image_tag User.find(c.user_id).img, :style => "height: 20px">
+                    <%= image_tag User.find(c.user_id).img, :style => "height: 20px" %>
                 <% end %>
                 <a class="no_decoration bree" href="/users/<%= c.user_id %>"><%= User.find(c.user_id).username %></a>
                 <% difference = (DateTime.now.utc - c.created_at).to_i %>
