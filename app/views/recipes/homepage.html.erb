@@ -1,0 +1,78 @@
+<center>
+    <div class="container"><br><br>
+        <div class="row">
+            <div class="col-lg">
+            </div>
+            <div class="col-lg">
+                <h1><span class="bree">Homepage</span></h1>
+            </div>
+            <div class="col-lg">
+            </div>
+        </div>
+    
+        <br>
+        <br>
+
+        <% if @recipes.length==0 %>
+            No recipe found :(<br><br>
+        <% end %>
+        <% @recipes.first(@recipes_per_page).each do |r| %>
+
+            <div style="border: solid lightgrey 1px; background-color: #fff8e5; border-radius: 5px"><br>
+
+                <div class="container" style="width: 600px">
+                    <% u = User.find(r.user_id) %>
+                    <% url="/users/" + r.user_id.to_s %>
+                    <h2><span style="float:left">
+                        <% if u.profile_img.attached? %>
+                            <%= image_tag u.profile_img, :style => "height: 40px" %>
+                        <% else %>
+                            <%= image_tag u.img, :style => "height: 40px" %>
+                        <% end %>
+                        <a class="bree no_decoration" href=<%= url %>><%= u.username %></a>
+                    </span></h2>
+                    
+                    <% difference = (DateTime.now.utc - r.created_at).to_i %>
+                    <% if difference < 60 %>
+                    <p class="text-right"><%= difference.to_s + "s" %></p>
+                    <% elsif difference < 60*60 %>
+                    <p class="text-right"><%= (difference/60).to_s + "m" %></p>
+                    <% elsif difference < 60*60*24 %>
+                    <p class="text-right"><%= (difference/(60*60)).to_s + "h" %></p>
+                    <% elsif difference < 60*60*24*7 %>
+                    <p class="text-right"><%= (difference/(60*60*24)).to_s + "g" %></p>
+                    <% elsif difference < 60*60*24*7*52 %>
+                    <p class="text-right"><%= (difference/(60*60*24*7)).to_s + "w" %></p>
+                    <% else %>
+                    <p class="text-right"><%= (difference/(60*60*24*7*52)).to_s + "y" %></p>
+                    <% end %>
+
+                    <% url_recipe="/users/" + r.user_id.to_s + "/recipes/" + r.id.to_s %>
+                    <a href=<%= url_recipe %>>
+                        <br><br>
+                            <%= image_tag r.image, :style => "object-fit: cover; max-height: 600px; width: 600px;" %>
+                    </a><br><br>
+
+                    <h2 style="float: left" class="bree"><%= r.title %></h2>
+                    
+                    <% if Like.exists?(user_id: current_user.id, recipe_id: r.id) %>
+                        <h4 class="text-right"><%= r.n_likes %>❤️ <%= r.n_comments %>💬</h4><br>
+                    <% else %>
+                    <h4 class="text-right"><%= r.n_likes %>🤍 <%= r.n_comments %>💬</h4><br>
+                    <% end %>
+                </div>
+            </div><br><br>
+
+        <% end %>
+        <% i=1 %>
+        <% while i <= @n_pages do %>
+            <b><% if params[:id].to_i==i%>
+                <a style="color: red" href="/homepage/<%= i %>"> <%= i %> </a>&nbsp
+            <% else %>
+                <a href="/homepage/<%= i %>"> <%= i %> </a>&nbsp
+            <% end %></b>
+            <% i=i+1 %>
+        <% end %>
+        <br><br>
+    </div>
+</center>

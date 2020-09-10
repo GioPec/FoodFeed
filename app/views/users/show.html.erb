@@ -1,0 +1,112 @@
+<div class="container"><br><br>
+    <div class="row">
+        <div class="col-lg text-right">
+            <% if @user.profile_img.attached? %>
+                <%= image_tag @user.profile_img, :style => "height: 200px" %>
+            <% else %>
+                <%= image_tag @user.img, :style => "height: 200px" %>
+            <% end %>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-lg text-left">
+            <h2 class="bree"><%= @user.username %> (#<%= @user.id %>)</h2>
+            <a href="/users/<%= @user.id %>/follower">Followers: <%= @user.n_follower %></a> &nbsp&nbsp&nbsp&nbsp
+            <a href= "/users/<%= @user.id %>/following"> Following: <%= @user.n_following %></a><br><br>
+            <b><%= @user.first_name %> <%= @user.last_name %></b><br><br>
+            <%= @user.bio %>
+        </div>
+        <div class="col">
+                    <!--buttons-->
+                    <% if current_user.id==@user.id %>
+                        <%= button_to 'Favourites', favourites_path(current_user.id), :class => "btn btn-orange", :method => :get %><br>
+                        <%= button_to "Edit your profile", edit_user_registration_path, :class => "btn btn-orange btn-sm", :method => :get %><br>
+                        <%= button_to 'Logout', destroy_user_session_path, :method => :delete, :class => "btn btn-danger btn-sm" %>
+                    <% elsif Follow.exists?(follower_id: current_user.id, following_id: @user.id) %>
+                        <%= button_to "Unfollow", unfollow_path(@user.id, current_user.id), :method => :delete, :class => "btn btn-danger bree" %>
+                    <% else %>
+                        <%= button_to "Follow", follow_path(@user.id, current_user.id), :method => :get, :class => "btn btn-orange bree" %>
+                    <% end %>
+                </div>
+    </div><br>
+    <div class="text-center">
+    <% if current_user.id==@user.id %>
+        <%= button_to "Add new recipe", new_user_recipe_path(current_user.id), :method => "get", :class => "btn btn-orange btn-lg" %>
+    <% end %>
+    </div>
+    <hr>
+    <div class="container text-center">
+        <h2 class="bree"><%= @n_recipe %> recipes:</h2><br>
+        
+            <div class="row">
+                <div class="col">
+                    <% col1=0 %>
+                    <% @user.recipes.reverse.each do |r| %>
+                        <% if col1%3==0 %>
+                            <a name="Image" id="Image" href=<%= user_recipe_path(current_user.id, r.id) %>>
+                                <div class="thumbnail">
+                                    <%= image_tag r.image, :style => "height: 50px; object-fit: cover; width: 250px; height: 250px" %>
+                                    <div class="centered thumbnail_data">🤍<%= r.n_likes %> 💬<%= r.n_comments %></div>
+                                </div>
+                            </a>
+                            <p class="bree"><%= r.title %></p><br>
+                        <% end %>
+                    <% col1=col1+1 %>
+                    <% end %>
+                </div>
+                <div class="col">
+                    <% col2=2 %>
+                    <% @user.recipes.reverse.each do |r| %>
+                        <% if col2%3==0 %>
+                            <a href=<%= user_recipe_path(current_user.id, r.id) %>>
+                                <div class="thumbnail">
+                                    <%= image_tag r.image, :style => "height: 50px; object-fit: cover; width: 250px; height: 250px" %>
+                                    <div class="centered thumbnail_data">🤍<%= r.n_likes %> 💬<%= r.n_comments %></div>
+                                </div>
+                            </a>
+                            <p class="bree"><%= r.title %></p><br>
+                        <% end %>
+                    <% col2=col2+1 %>
+                    <% end %>
+                </div>
+                <div class="col">
+                    <% col3=1 %>
+                    <% @user.recipes.reverse.each do |r| %>
+                        <% if col3%3==0 %>
+                            <a href=<%= user_recipe_path(current_user.id, r.id) %>>
+                                <div class="thumbnail">
+                                    <%= image_tag r.image, :style => "height: 50px; object-fit: cover; width: 250px; height: 250px" %>
+                                    <div class="centered thumbnail_data">🤍<%= r.n_likes %> 💬<%= r.n_comments %></div>
+                                </div>
+                            </a>
+                            <p class="bree"><%= r.title %></p><br>
+                        <% end %>
+                    <% col3=col3+1 %>
+                    <% end %>
+                </div>
+                <br>
+        </div>
+    </div>
+</div>
+<hr>
+<center>
+<% if current_user.id==@user.id %>
+
+    <%= button_to "Delete your profile", user_registration_path, data: { confirm: "Are you sure?" }, :method => :delete, :class => "btn btn-danger btn-sm" %><br>
+
+<% elsif current_user.has_role? :mod, @user %>
+
+    <% if @user.disabled==true %>
+        <% c=true %>
+    <% else c=false%>
+    <% end %>
+
+    <% if @user.role=="A" %>
+        <% e=true %>
+    <% else e=false%>
+    <% end %>
+
+    <%= button_to "Disable account", disable_account_path(@user.id), disabled: (c||e), data: { confirm: "Are you sure?" }, :method => :get, :class => "btn btn-danger btn-sm" %><br>
+    <%= button_to "Enable account", enable_account_path(@user.id), disabled: (!c||e), data: { confirm: "Are you sure?" }, :method => :get, :class => "btn btn-danger btn-sm" %>
+
+<% end %>
+</center>

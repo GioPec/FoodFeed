@@ -1,0 +1,15 @@
+<center>
+    <br><br>
+    <h1>Following</h1><hr>
+
+    <% @following.each do |f| %>
+        <% u=User.find(f)%>
+        <h2><%= link_to u.username, user_path(u.id) %></h2><br>
+        <% if u.profile_img.attached? %>
+            <%= image_tag u.profile_img, :style => "height: 200px" %>
+        <% else %>
+            <%= image_tag u.img, :style => "height: 200px" %>
+        <% end %>
+        <hr>
+    <% end %>
+</center>
