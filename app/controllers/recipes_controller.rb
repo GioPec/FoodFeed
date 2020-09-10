@@ -6,7 +6,7 @@ class RecipesController < ApplicationController
 
     def create      #data pubblicazione
         @user = User.find(current_user.id)
-        r = Recipe.create(user_id: current_user.id, title: params.require(:recipe).permit(:title)[:title],
+        r = Recipe.new(user_id: current_user.id, title: params.require(:recipe).permit(:title)[:title],
             preparazione: params.require(:recipe).permit(:preparazione)[:preparazione],
             ingredients: params.require(:recipe).permit(:ingredients)[:ingredients],
             image: params.require(:recipe).permit(:image)[:image],
@@ -19,12 +19,13 @@ class RecipesController < ApplicationController
             created_at: DateTime.now, n_likes: 0, n_comments: 0)
 
         if r.valid?
+            r.save!
             current_user.add_role :mod, r
             flash[:notice] = "A recipe from #{@user.username} has been successfully posted!"
             redirect_to user_path(current_user.id)
         else
             flash[:notice] = "Inputs can't be blank"
-            redirect_back(fallback_location: root_path)
+            redirect_to new_user_recipe_path(current_user.id)
         end
 		
     end
@@ -195,7 +196,7 @@ class RecipesController < ApplicationController
     end
 
     def top
-        @recipes = Recipe.all().to_a.sort_by{|e| -e[:n_likes]}.first(5)
+        @recipes = Recipe.all().where("created_at > ?", Date.today-7).to_a.sort_by{|e| -e[:n_likes]}.first(5)
     end
 
     def homepage

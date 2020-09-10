@@ -13,4 +13,17 @@ class Recipe < ActiveRecord::Base
 
     has_one_attached :image
 
+    validate :acceptable_image
+    def acceptable_image
+        return unless image.attached?
+
+        unless image.byte_size <= 30.megabyte
+          errors.add(:image, "is too big")
+        end
+
+        acceptable_types = ["image/jpeg", "image/png", "image/jpg"]
+        unless acceptable_types.include?(image.content_type)
+          errors.add(:image, "must be a JPEG or PNG")
+        end
+    end
 end
