@@ -60,42 +60,20 @@
             </li>
             <!--notification-->
             <li class="nav-item giu">
-              <div class="popup nav-link" onclick="showNotifications()">🔔 <%= Notification.where(user_id: current_user.id, read: false).length %>
-                <span class="popuptext" id="myPopup2">
-                  <% Notification.where(user_id: current_user.id).last(5).reverse.each do |n| %>
-                    <% if n.read==false %>
-                      <% sender=User.find(n.sender_id)%>
-                      <% if n.notification_type=="like" %>
-                        <%= link_to sender.username+" liked your recipe", remove_notification_path(n.id), :class => "not_read_notification" %><br>
-                      <% elsif n.notification_type=="comment" %>
-                        <%= link_to sender.username+" commented your recipe",  remove_notification_path(n.id), :class => "not_read_notification" %><br>
-                      <% else %> 
-                        <%= link_to sender.username+" followed you", remove_notification_path(n.id), :class => "not_read_notification" %><br>
-                      <% end %>
-                    <% else %>
-                      <% sender=User.find(n.sender_id)%>
-                      <% if n.notification_type=="like" %>
-                        <a class="read_notification" href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> liked your recipe</a><br>
-                      <% elsif n.notification_type=="comment" %> 
-                        <a class="read_notification" href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> commented your recipe</a><br>
-                      <% else %> 
-                        <a class="read_notification" href="/users/<%= n.sender_id %>"><%= sender.username %> started following you</a><br>
-                      <% end %>
-                    <% end %>
-                  <% end %>
-                  <a style="background-color: #ff8a65; width: 298px;" href="/users/<%= current_user.id %>/notifications">Show all notifications</a>
-                </span>
-              </div>
+              <span>
+                  <b><button style="font-size:large" class="btn btn-xs" data-toggle="modal" data-target="#selezioneNotifiche" type="button"><b>🔔 <%= Notification.where(user_id: current_user.id, read: false).length %></b></button></b>                
+              </span>
+            </li>
               <!--profile-->
-              <li class="nav-item">
-                <a id="Profile" name="Profile" class="nav-link" href="/users/<%= current_user.id %>">
-                  <% if current_user.profile_img.attached? %>
-                      <%= image_tag current_user.profile_img, :style => "height: 30px" %>
-                  <% else %>
-                      <%= image_tag current_user.img, :style => "height: 30px" %>
-                  <% end %>
-                </a>
-              </li>
+            <li class="nav-item">
+              <a id="Profile" name="Profile" class="nav-link" href="/users/<%= current_user.id %>">
+                <% if current_user.profile_img.attached? %>
+                    <%= image_tag current_user.profile_img, :style => "height: 30px" %>
+                <% else %>
+                    <%= image_tag current_user.img, :style => "height: 30px" %>
+                <% end %>
+              </a>
+            </li>
         </ul>
       </div>
     </nav>
@@ -114,6 +92,42 @@
       </footer>
     <% end %>
 
+  <% if user_signed_in? %>
+  <div class="modal" id="selezioneNotifiche" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"><p>Notifications</p></h3>
+                <button style="color:black" type="button" class="close" data-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                  <% Notification.where(user_id: current_user.id).last(5).reverse.each do |n| %>
+                    <% if n.read==false %>
+                      <% sender=User.find(n.sender_id)%>
+                      <% if n.notification_type=="like" %>
+                        <%= link_to sender.username+" liked your recipe", remove_notification_path(n.id), :class => "not_read_notification row no_decoration" %>
+                      <% elsif n.notification_type=="comment" %>
+                        <%= link_to sender.username+" commented your recipe",  remove_notification_path(n.id), :class => "not_read_notification row no_decoration" %>
+                      <% else %> 
+                        <%= link_to sender.username+" followed you", remove_notification_path(n.id), :class => "not_read_notification row no_decoration" %>
+                      <% end %>
+                    <% else %>
+                      <% sender=User.find(n.sender_id)%>
+                      <% if n.notification_type=="like" %>
+                        <a class="read_notification row no_decoration" href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> liked your recipe</a>
+                      <% elsif n.notification_type=="comment" %> 
+                        <a class="read_notification row no_decoration" href="/users/<%= n.user_id %>/recipes/<%= n.recipe_id %>"><%= sender.username %> commented your recipe</a>
+                      <% else %> 
+                        <a class="read_notification row no_decoration" href="/users/<%= n.sender_id %>"><%= sender.username %> started following you</a>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <a class="row no_decoration" style="background-color: #ff8a65; padding-left: 15px;" href="/users/<%= current_user.id %>/notifications">Show all notifications</a>
+            </div>
+        </div>
+    </div>
+  </div>
+  <% end %>
   </body>
 
 </html>
