@@ -197,7 +197,7 @@ class RecipesController < ApplicationController
     end
 
     def top
-        @recipes = Recipe.all().to_a.sort_by{|e| -e[:n_likes]}.first(5)
+        @recipes = Recipe.all().where("created_at > ?", Date.today-7).to_a.sort_by{|e| -e[:n_likes]}.first(5)
     end
 
     def homepage
