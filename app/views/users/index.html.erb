@@ -15,12 +15,8 @@
                 <th>phone_number</th>
                 <th>gender</th>
                 <th>email</th>
-                <th>bio</th>
-                <th>img</th>
                 <th>role</th>
                 <th>created_at</th>
-                <th>updated_at</th>
-                <th>role</th>
                 <th>disabled</th>
                 <th>show</th>
                 <th>upgrade</th>
@@ -62,12 +58,8 @@
                     <td><%= u.phone_number %></td>
                     <td><%= u.gender %></td>
                     <td><%= u.email %></td>
-                    <td><%= u.bio %></td>
-                    <td><%= u.img %></td>
                     <td><%= u.role %></td>
                     <td><%= u.created_at %></td>
-                    <td><%= u.updated_at %></td>
-                    <td><%= u.role %></td>
                     <td><%= u.disabled %></td>
                     <td><%= button_to "show", user_path(u.id), :method => :get %></td>
                     <td><%= button_to "upgrade", upgrade_path(u.id), disabled: (a||b||d), :method => :get %></td>
