@@ -82,7 +82,7 @@ class RecipesController < ApplicationController
         page = params[:id].to_i
         @recipes_per_page = 5
         @n_pages = ((Recipe.all().length/@recipes_per_page.to_f).ceil)
-        @recipes = Recipe.all().to_a.reverse.drop(@recipes_per_page*(page-1))
+        @recipes = Recipe.all().to_a.sort_by{ |r| r.created_at }.reverse.drop(@recipes_per_page*(page-1))
     end
 
     def updatediscover
