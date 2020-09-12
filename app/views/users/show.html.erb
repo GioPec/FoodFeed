@@ -54,8 +54,8 @@
                     <% end %>
                 </div>
                 <div class="col">
-                    <% col2=1 %>
-                    <% @user.recipes.reverse.each do |r| %>
+                    <% col2=2 %>
+                    <% @user.recipes.to_a.sort_by{ |r| r.created_at }.reverse.each do |r| %>
                         <% if col2%3==0 %>
                             <a href=<%= user_recipe_path(current_user.id, r.id) %>>
                                 <div class="thumbnail">
@@ -69,7 +69,7 @@
                     <% end %>
                 </div>
                 <div class="col">
-                    <% col3=2 %>
+                    <% col3=1 %>
                     <% @user.recipes.reverse.each do |r| %>
                         <% if col3%3==0 %>
                             <a href=<%= user_recipe_path(current_user.id, r.id) %>>
