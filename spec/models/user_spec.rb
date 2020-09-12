@@ -10,7 +10,6 @@ RSpec.describe User, :type => :model do
   
   it "is valid with valid attributes" do
     expect(@user1).to be_valid
-
   end
   
   it "has a unique username" do

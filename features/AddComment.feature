@@ -1,6 +1,6 @@
 Feature: User can add a comment
 
-Scenario: Add a recipe
+Scenario: Add a comment
     Given I am a registered user
     When I add a recipe
     And I follow "Profile"

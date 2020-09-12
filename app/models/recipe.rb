@@ -4,6 +4,7 @@ class Recipe < ActiveRecord::Base
     validates :image, presence: true   #verificare
     validates :title, presence: true
     validates :preparazione, presence: true
+    validates :ingredients, presence: true
 
     belongs_to :user
     has_many :likes
