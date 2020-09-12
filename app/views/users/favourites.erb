@@ -17,7 +17,7 @@
             <% @favourites.each do |f| %>
                 <div class="container"  style="border: solid lightgrey 1px; background-color: #fff8e5; border-radius: 5px"><br>
                     <% r = Recipe.find(f.recipe_id) %>
-                    <% u = User.find(f.user_id) %>
+                    <% u = User.find(r.user_id) %>
                     <% url="/users/" + r.user_id.to_s %>    <!--creo il link-->
                     <h3><span>
                         <% if u.profile_img.attached? %>
