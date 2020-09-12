@@ -124,9 +124,9 @@
                 <% url="/users/" + r.user_id.to_s %>
                 <h2><span style="float:left">
                     <% if u.profile_img.attached? %>
-                        <img src="<%= url_for(u.profile_img) %>" height="40px">
+                        <%= image_tag u.profile_img, :style => "height: 40px" %>
                     <% else %>
-                        <img src="<%= u.img %>" height="40px">
+                        <%= image_tag u.img, :style => "height: 40px" %>
                     <% end %>
                     <a class="bree no_decoration" href=<%= url %>><%= u.username %></a>
                 </span></h2>
@@ -148,7 +148,7 @@
 
                 <% url_recipe="/users/" + r.user_id.to_s + "/recipes/" + r.id.to_s %>
                 <a href=<%= url_recipe %>>
-                    <br><br><img class="post" src="<%= url_for(r.image) %>">
+                    <br><br><%= image_tag r.image, :style => "object-fit: cover; max-height: 600px; width: 600px;" %>
                 </a><br><br>
 
                 <h2 style="float: left" class="bree"><%= r.title %></h2>

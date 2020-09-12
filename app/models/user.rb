@@ -31,11 +31,11 @@ class User < ApplicationRecord
     validate :acceptable_image
     def acceptable_image
         return unless profile_img.attached?
-
+      
         unless profile_img.byte_size <= 30.megabyte
           errors.add(:image, "is too big")
         end
-
+      
         acceptable_types = ["image/jpeg", "image/png", "image/jpg"]
         unless acceptable_types.include?(profile_img.content_type)
           errors.add(:image, "must be a JPEG or PNG")

@@ -6,7 +6,7 @@
             <div class="col-lg-14">
                  <h1><span><h1 class="bree"><%= @recipe.title %></h1></span></h1><br>
                  <!-- img -->
-                 <img src="<%= url_for(@recipe.image) %>" height="600px" style="max-width: 900px; object-fit: cover;"><br>
+                 <%= image_tag @recipe.image, :style => "height: 600px; max-width: 900px; object-fit: cover;" %><br>
             </div>
             <div class="col-lg text-right">
                 <% if current_user.id.to_s == params[:user_id] %>
@@ -79,13 +79,13 @@
                 <% else %>
                     <span style="display:inline: font-size:x-large"><%= link_to "🤍", like_path(current_user.id, @recipe.id), :method => :get, :class => "no_decoration" %></span>
                     <span>
-                        <b><button style="font-size:x-large" class="btn btn-xs" data-toggle="modal" data-target="#selezione" type="button"><b><%= @recipe.n_likes %> likes</b></button>  </b>       
+                        <b><button style="font-size:x-large" class="btn btn-xs" data-toggle="modal" data-target="#selezione" type="button"><b><%= @recipe.n_likes %> likes</b></button>  </b>                
                     </span>
-                <% end %>  
+                <% end %>            
             </div>
+            
             <div class="col-sm text-right">
                 <!-- favourite -->
-                
                     <% if Favourite.exists?(user_id: current_user.id, recipe_id: @recipe.id) %>
                         <b><span style="font-size:x-large"><%= link_to "⭐ Remove from favourites", remove_favourite_path(current_user.id, @recipe.id), :method => :delete, :class => "no_decoration" %></span></b>
                     <% else %>
@@ -103,9 +103,9 @@
         <% Comment.all.each do |c| %>
             <% if c.recipe_id.to_s == params[:id]%>
                 <% if User.find(c.user_id).profile_img.attached? %>
-                    <img src="<%= url_for(User.find(c.user_id).profile_img) %>" height="20px">
+                    <%= image_tag User.find(c.user_id).profile_img, :style => "height: 20px" %>
                 <% else %>
-                    <img src="<%= User.find(c.user_id).img %>" height="20px">
+                    <%= image_tag User.find(c.user_id).img, :style => "height: 20px" %>
                 <% end %>
                 <a class="no_decoration bree" href="/users/<%= c.user_id %>"><%= User.find(c.user_id).username %></a>
                 <% difference = (DateTime.now.utc - c.created_at).to_i %>
@@ -136,7 +136,6 @@
     <% end %>
 
 </center>
-
 <div class="modal" id="selezione" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -149,9 +148,9 @@
                     <p>
                     <% if l.recipe_id.to_s == params[:id]%>
                         <% if User.find(l.user_id).profile_img.attached? %>
-                            <img src="<%= url_for(User.find(l.user_id).profile_img) %>" height="20px">
+                            <%= image_tag User.find(l.user_id).profile_img, :style => "height: 20px" %>
                         <% else %>
-                            <img src="<%= User.find(l.user_id).img %>" height="20px">
+                            <%= image_tag User.find(l.user_id).img, :style => "height: 20px" %>
                         <% end %>
                         <a href="/users/<%= l.user_id %>"><%= User.find(l.user_id).username %></a>
                     </p>

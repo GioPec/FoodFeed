@@ -89,7 +89,7 @@ class UsersController < ApplicationController
         if @user
             
         else
-            render inline: '<center><h1>404 - NOT FOUND</h1><a href="http://localhost:3000">go back</a></center>'
+            render inline: '<center><h1>404 - NOT FOUND</h1><a href="https://foodfeedproject.herokuapp.com/homepage/1">go back</a></center>'
         end
     end
 
