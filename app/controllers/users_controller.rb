@@ -89,7 +89,8 @@ class UsersController < ApplicationController
         if @user
             
         else
-            render inline: '<center><h1>404 - NOT FOUND</h1><a href="https://foodfeedproject.herokuapp.com/homepage/1">go back</a></center>'
+            flash[:notice] = "No user found with that username"
+            redirect_back(fallback_location: root_path)
         end
     end
 
