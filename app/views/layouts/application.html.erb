@@ -65,13 +65,13 @@
                   <b><button style="font-size:large" class="btn btn-xs" data-toggle="modal" data-target="#selezioneNotifiche" type="button"><b>🔔 <%= Notification.where(user_id: current_user.id, read: false).length %></b></button></b>                
               </span>
             </li>
-            <!--profile-->
+              <!--profile-->
             <li class="nav-item">
               <a id="Profile" name="Profile" class="nav-link" href="/users/<%= current_user.id %>">
                 <% if current_user.profile_img.attached? %>
-                    <img src="<%= url_for(current_user.profile_img) %>" height="30px">
+                    <%= image_tag current_user.profile_img, :style => "height: 30px" %>
                 <% else %>
-                    <img src="<%= current_user.img %>" height="30px">
+                    <%= image_tag current_user.img, :style => "height: 30px" %>
                 <% end %>
               </a>
             </li>
@@ -93,7 +93,7 @@
       </footer>
     <% end %>
 
-    <% if user_signed_in? %>
+  <% if user_signed_in? %>
   <div class="modal" id="selezioneNotifiche" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -129,7 +129,6 @@
     </div>
   </div>
   <% end %>
-
   </body>
 
 </html>

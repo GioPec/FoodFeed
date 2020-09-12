@@ -4,11 +4,11 @@
 
     <% @followers.each do |f| %>
         <% u=User.find(f)%>
-        <h2 class="bree"><%= link_to u.username, user_path(u.id) %></h2><br>
+        <h2 class="bree no_decoration"><%= link_to u.username, user_path(u.id) %></h2><br>
         <% if u.profile_img.attached? %>
-            <img src="<%= url_for(u.profile_img) %>" height="200px">
+            <%= image_tag u.profile_img, :style => "height: 200px" %>
         <% else %>
-            <img src="<%= u.img %>" height="200px">
+            <%= image_tag u.img, :style => "height: 200px" %>
         <% end %>
         <hr>
     <% end %>
