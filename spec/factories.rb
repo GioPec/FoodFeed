@@ -1,10 +1,10 @@
 FactoryBot.define do   
     factory :user, class: User do
-        username        {"fff"}
-        email           {"f@f.f"}
-        password        {"ffffffff"}
+        username        {"Test"}
+        email           {"test@mail.it"}
+        password        {"testtest"}
         role            {"U"}
-        first_name      {"fff"}
-        last_name       {"fff"}
+        first_name      {"Test"}
+        last_name       {"Test"}
     end
 end

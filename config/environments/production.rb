@@ -37,7 +37,7 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
 
-  config.active_storage.service = :amazon   # not local!!!
+  config.active_storage.service = :amazon
 
   #DEVISE
   config.action_mailer.smtp_settings = {
