@@ -41,7 +41,7 @@ class RecipesController < ApplicationController
             Recipe.delete(params[:id])
             Comment.where(:recipe_id => params[:id]).destroy_all	            
             Like.where(:recipe_id => params[:id]).destroy_all
-            Favourites.where(:recipe_id => params[:id]).destroy_all       
+            Favourite.where(:recipe_id => params[:id]).destroy_all       
             redirect_to user_path(current_user.id)
         else
             flash[:notice] = "You are not allowed to do this"
