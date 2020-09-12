@@ -2,7 +2,7 @@
     <% a=false %>
 <% else a=true %>
 <% end %>
-<div class="text-center">
+<center>
     <br><h2 class="bree" style="text-align: center">Users</h2><br>
     <table>
         <thead>
@@ -21,7 +21,6 @@
                 <th>show</th>
                 <th>upgrade</th>
                 <th>downgrade</th>
-                <th>disable</th>
                 <th>enable</th>
             </tr>
         </thead>
@@ -60,7 +59,6 @@
                     <td><%= u.email %></td>
                     <td><%= u.role %></td>
                     <td><%= u.created_at %></td>
-                    <td><%= u.disabled %></td>
                     <td><%= button_to "show", user_path(u.id), :method => :get %></td>
                     <td><%= button_to "upgrade", upgrade_path(u.id), disabled: (a||b||d), :method => :get %></td>
                     <td><%= button_to "downgrade", downgrade_path(u.id), disabled: (a||b||!d), :method => :get %></td>
@@ -70,4 +68,4 @@
             <% end %>
         </tbody>
     </table>
-</div><br><br>
+</center><br><br>
