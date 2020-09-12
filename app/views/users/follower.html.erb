@@ -1,10 +1,10 @@
 <center>
     <br><br>
-    <h1>Follower</h1><hr>
+    <h1 class="bree">Follower</h1><hr>
 
     <% @followers.each do |f| %>
         <% u=User.find(f)%>
-        <h2><%= link_to u.username, user_path(u.id) %></h2><br>
+        <h2 class="bree"><%= link_to u.username, user_path(u.id) %></h2><br>
         <% if u.profile_img.attached? %>
             <img src="<%= url_for(u.profile_img) %>" height="200px">
         <% else %>
