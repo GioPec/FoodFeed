@@ -36,6 +36,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     Comment.where(:user_id => current_user.id).destroy_all
     Like.where(:user_id => current_user.id).destroy_all
     Favourite.where(:user_id => current_user.id).destroy_all
+    Notification.where(:user_id => current_user.id).destroy_all
+    Notification.where(:sender_id => current_user.id).destroy_all
     fol = Follow.where(:follower_id => current_user.id).to_a
     fol.each do |f|
       us=User.where(:id => f.following_id)
