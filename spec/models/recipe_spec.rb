@@ -12,7 +12,8 @@ RSpec.describe Recipe, type: :model do
 
   describe "Creating a Recipe" do
     it "should be permitted" do
-      recipe = Recipe.new(title: 'Recipe', 
+      recipe = Recipe.new(title: 'Recipe',
+                              ingredients: 'Ingredients',
                               preparazione: 'Preparation',
                               image: Rack::Test::UploadedFile.new('spec/support/test_image.jpg', 'image/jpg'),
                               user_id: @user.id,
@@ -23,7 +24,8 @@ RSpec.describe Recipe, type: :model do
     end
 
     it "is not valid without the title" do
-      recipe = Recipe.new(title: nil, 
+      recipe = Recipe.new(title: nil,
+                              ingredients: 'Ingredients',
                               preparazione: 'Preparation',
                               image: Rack::Test::UploadedFile.new('spec/support/test_image.jpg', 'image/jpg'),
                               user_id: @user.id)
@@ -33,15 +35,25 @@ RSpec.describe Recipe, type: :model do
 
     it "is not valid without the preparation" do
       recipe = Recipe.new(title: 'Recipe', 
+                              ingredients: 'Ingredients',
                               preparazione: nil,
                               image: Rack::Test::UploadedFile.new('spec/support/test_image.jpg', 'image/jpg'),
                               user_id: @user.id)
       expect(recipe).to_not be_valid
     end
 
+    it "is not valid without the ingredients" do
+      recipe = Recipe.new(title: 'Recipe', 
+                              ingredients: nil,
+                              preparazione: 'Preparation',
+                              image: Rack::Test::UploadedFile.new('spec/support/test_image.jpg', 'image/jpg'),
+                              user_id: @user.id)
+      expect(recipe).to_not be_valid
+    end
 
     it "is not valid without the image" do
       recipe = Recipe.new(title: 'Recipe', 
+                              ingredients: 'Ingredients',
                               preparazione: 'Preparation',
                               image: nil,
                               user_id: @user.id)
@@ -50,6 +62,7 @@ RSpec.describe Recipe, type: :model do
 
     it "is not valid without the user" do
       recipe = Recipe.new(title: 'Recipe', 
+                              ingredients: 'Ingredients',
                               preparazione: 'Preparation',
                               image: Rack::Test::UploadedFile.new('spec/support/test_image.jpg', 'image/jpg'),
                               user_id: nil)
@@ -58,6 +71,7 @@ RSpec.describe Recipe, type: :model do
 
     it "is valid without n_likes" do
       recipe = Recipe.new(title: 'Recipe', 
+                              ingredients: 'Ingredients',
                               preparazione: 'Preparation',
                               image: Rack::Test::UploadedFile.new('spec/support/test_image.jpg', 'image/jpg'),
                               user_id: @user.id,
@@ -69,6 +83,7 @@ RSpec.describe Recipe, type: :model do
 
     it "is valid without n_comments" do
       recipe = Recipe.new(title: 'Recipe', 
+                              ingredients: 'Ingredients',
                               preparazione: 'Preparation',
                               image: Rack::Test::UploadedFile.new('spec/support/test_image.jpg', 'image/jpg'),
                               user_id: @user.id,

@@ -1,7 +1,4 @@
-Feature: User can login to 
-  As a registered user
-  So that I can interact with the system
-  I want to log in the system
+Feature: User can log in
 
 Scenario: Login success
   Given I am a registered user
