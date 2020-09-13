@@ -1,16 +1,17 @@
 require "rails_helper"
 
-RSpec.describe Recipe, type: :model do
-
-  after(:all) do
-    @user.destroy
-  end
+RSpec.describe Recipe, :type => :model do
 
   before(:all) do
     @user = FactoryBot.create(:user)
   end
 
+  after(:all) do
+    @user.destroy
+  end
+
   describe "Creating a Recipe" do
+
     it "should be permitted" do
       recipe = Recipe.new(title: 'Recipe',
                               ingredients: 'Ingredients',
@@ -31,7 +32,6 @@ RSpec.describe Recipe, type: :model do
                               user_id: @user.id)
       expect(recipe).to_not be_valid
     end
-
 
     it "is not valid without the preparation" do
       recipe = Recipe.new(title: 'Recipe', 
@@ -56,6 +56,15 @@ RSpec.describe Recipe, type: :model do
                               ingredients: 'Ingredients',
                               preparazione: 'Preparation',
                               image: nil,
+                              user_id: @user.id)
+      expect(recipe).to_not be_valid
+    end
+
+    it "is not valid if the image has a wrong extension" do
+      recipe = Recipe.new(title: 'Recipe', 
+                              ingredients: 'Ingredients',
+                              preparazione: 'Preparation',
+                              image: Rack::Test::UploadedFile.new('spec/support/factory_bot.rb'),
                               user_id: @user.id)
       expect(recipe).to_not be_valid
     end
@@ -92,5 +101,6 @@ RSpec.describe Recipe, type: :model do
                               created_at: Time.now.utc)
       expect(recipe).to be_valid
     end
+
   end
 end
