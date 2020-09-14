@@ -32,7 +32,6 @@ class RecipesController < ApplicationController
     end
 
     def show
-
         @recipe = Recipe.find(params[:id])
     end
 
@@ -207,7 +206,7 @@ class RecipesController < ApplicationController
         @recipes=[]
         @recipes_per_page = 5
         page = params[:id].to_i
-        all_recipes = Recipe.all().to_a
+        all_recipes = Recipe.all().to_a.sort_by{ |r| r.created_at }
         f = Follow.where(follower_id: current_user.id)
         f.each do |ff|
             following.push(ff.following_id)

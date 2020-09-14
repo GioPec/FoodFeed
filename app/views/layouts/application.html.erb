@@ -110,7 +110,7 @@
                       <% elsif n.notification_type=="comment" %>
                         <%= link_to sender.username+" commented your recipe",  remove_notification_path(n.id), :class => "not_read_notification row no_decoration" %>
                       <% else %> 
-                        <%= link_to sender.username+" followed you", remove_notification_path(n.id), :class => "not_read_notification row no_decoration" %>
+                        <%= link_to sender.username+" started following you", remove_notification_path(n.id), :class => "not_read_notification row no_decoration" %>
                       <% end %>
                     <% else %>
                       <% sender=User.find(n.sender_id)%>
