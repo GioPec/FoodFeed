@@ -89,11 +89,8 @@
 </div>
 <hr>
 <center>
-<% if current_user.id==@user.id %>
 
-    <%= button_to "Delete your profile", user_registration_path, data: { confirm: "Are you sure?" }, :method => :delete, :class => "btn btn-danger btn-sm" %><br>
-
-<% elsif current_user.has_role? :mod, @user %>
+<% if current_user.has_role? :mod, @user %>
 
     <% if @user.disabled==true %>
         <% c=true %>

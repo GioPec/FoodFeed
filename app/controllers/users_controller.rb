@@ -90,7 +90,7 @@ class UsersController < ApplicationController
             
         else
             flash[:notice] = "No user found with that username"
-            redirect_back(fallback_location: root_path)
+            redirect_to homepage_path(1)
         end
     end
 
@@ -168,7 +168,7 @@ class UsersController < ApplicationController
         if n.notification_type!="follow"
             redirect_to user_recipe_path(n.user_id, n.recipe_id)
         else
-            redirect_to user_path(n.user_id)
+            redirect_to user_path(n.sender_id)
         end
     end
 
