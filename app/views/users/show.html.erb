@@ -90,7 +90,7 @@
 <hr>
 <center>
 
-<% if current_user.has_role? :mod, @user %>
+<% if current_user.has_role? :mod, @user && current_user.id != @user.id %>
 
     <% if @user.disabled==true %>
         <% c=true %>
