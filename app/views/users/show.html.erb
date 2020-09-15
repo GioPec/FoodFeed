@@ -89,8 +89,9 @@
 </div>
 <hr>
 <center>
+<% if current_user.id==@user.id %>
 
-<% if current_user.has_role? :mod && current_user.id!=@user.id %>
+<% elsif current_user.has_role? :mod, @user %>
 
     <% if @user.disabled==true %>
         <% c=true %>
