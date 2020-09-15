@@ -67,7 +67,7 @@ class RecipesController < ApplicationController
     end
 
     def daily
-        seed = Date.today.to_s.gsub('-','').to_i
+        seed = Date.today.to_s.gsub('-','').to_i+1
         srand(seed)
         recipe_number = rand(1165539)
         puts(recipe_number)
