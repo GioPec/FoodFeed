@@ -220,7 +220,7 @@ class RecipesController < ApplicationController
         end
 
         @n_pages = ((@recipes.length/@recipes_per_page.to_f).ceil)
-        @recipes = @recipes.to_a.reverse.drop(@recipes_per_page*(page-1))
+        @recipes = @recipes.to_a.sort_by{ |r| r.created_at }.reverse.drop(@recipes_per_page*(page-1))
 
         #@recipes = Recipe.joins(:follow).where(['recipes.user_id = follows.following_id'])
         #@recipes=Recipe.joins(:follow).where(follows: { following_id: admin })
